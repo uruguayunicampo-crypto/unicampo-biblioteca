@@ -417,15 +417,16 @@ async function cargar(){
       const o = {};
       cols.forEach((col,i) => { o[col] = row.c[i]?.v ?? ''; });
       return {
-        titulo:   String(o['titulo']||o['title']||''),
+        titulo:   String(o['título']||o['titulo']||o['title']||''),
         tema:     String(o['tema']||''),
         cultivo:  String(o['cultivo']||''),
         zafra:    String(o['zafra']||o['año']||''),
         tipo:     String(o['tipo']||'pptx').toLowerCase(),
         keywords: String(o['palabras clave']||o['keywords']||''),
-        resumen:  String(o['resumen']||o['descripcion']||''),
+        resumen:  String(o['resumen']||o['descripción']||o['descripcion']||''),
         autor:    String(o['autor']||''),
-        archivo:  String(o['archivo']||''),
+        empresa:  String(o['empresa']||''),
+        archivo:  String(o['archivo']||o['título']||o['titulo']||''),
         link:     String(o['link']||o['url']||''),
       };
     }).filter(w => w.titulo);
@@ -520,7 +521,7 @@ function render(lista, q){
         </div>
         ${w.keywords?`<p class="ckw">${hl(w.keywords,q)}</p>`:''}
         <div class="cfoot">
-          <span class="cautor">${w.autor||''}</span>
+          <span class="cautor">${[w.autor, w.empresa].filter(Boolean).join(' — ')}</span>
           ${w.link
             ?`<a class="bver" href="${w.link}" target="_blank" rel="noopener">Abrir en Drive →</a>`
             :`<button class="bver" onclick='detalle(${JSON.stringify(w)})'>Ver detalle →</button>`}
@@ -540,7 +541,7 @@ function render(lista, q){
             </div>
           </div>
           <div class="caction">
-            <span class="cautor">${w.autor||''}</span>
+            <span class="cautor">${[w.autor, w.empresa].filter(Boolean).join(' — ')}</span>
             ${w.link
               ?`<a class="bver" href="${w.link}" target="_blank" rel="noopener">Abrir →</a>`
               :`<button class="bver" onclick='detalle(${JSON.stringify(w)})'>Ver →</button>`}
