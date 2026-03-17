@@ -11,7 +11,7 @@ window.UNICAMPO_CONFIG = {
   //    Pegá aquí el ID de tu Google Sheet (ver INSTRUCCIONES.md)
   //    Ejemplo: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms'
   // ----------------------------------------------------------
-  sheetId: '2PACX-1vQiArg1HQU34LhuC7ipxe2KKU4xf8Xv14hbxy9t4Ml9ofdlIPRAeAGzcKRDeF78Eobe3mNHimwhtKzB',
+  sheetId: '1aREYK5M4AopxuJo6Bl2UjMEyxXl-Mrfn-7lnaWCmZ5U',
 
   // ----------------------------------------------------------
   // 2. NOMBRE DE LA HOJA
