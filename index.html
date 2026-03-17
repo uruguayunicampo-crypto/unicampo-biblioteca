@@ -408,25 +408,32 @@ async function cargar(){
   document.getElementById('banner').classList.add('oculto');
   document.getElementById('res').innerHTML = '<div class="loading"><div class="spinner"></div><p>Cargando biblioteca...</p></div>';
   try {
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}&headers=1`;
     const r = await fetch(url);
     const txt = await r.text();
     const json = JSON.parse(txt.substring(47).slice(0,-2));
-    const cols = json.table.cols.map(c => c.label.toLowerCase().trim());
-    bib = json.table.rows.map(row => {
+    let cols = json.table.cols.map(c => c.label.toLowerCase().trim());
+    let rows = json.table.rows;
+    // Si los labels están vacíos, usar la primera fila como encabezados
+    if(cols.every(c => c === '')) {
+      const firstRow = rows[0].c.map(cell => String(cell?.v ?? '').toLowerCase().trim());
+      cols = firstRow;
+      rows = rows.slice(1);
+    }
+    bib = rows.map(row => {
       const o = {};
       cols.forEach((col,i) => { o[col] = row.c[i]?.v ?? ''; });
       return {
-        titulo:   String(o['título']||o['titulo']||o['title']||''),
+        titulo:   String(o['titulo']||o['title']||o['título']||''),
         tema:     String(o['tema']||''),
         cultivo:  String(o['cultivo']||''),
-        zafra:    String(o['zafra']||o['año']||''),
+        zafra:    String(o['zafra']||''),
         tipo:     String(o['tipo']||'pptx').toLowerCase(),
-        keywords: String(o['palabras clave']||o['keywords']||''),
-        resumen:  String(o['resumen']||o['descripción']||o['descripcion']||''),
+        keywords: String(o['keywords']||o['palabras clave']||o['palabras_clave']||''),
+        resumen:  String(o['resumen']||''),
         autor:    String(o['autor']||''),
         empresa:  String(o['empresa']||''),
-        archivo:  String(o['archivo']||o['título']||o['titulo']||''),
+        archivo:  String(o['archivo']||o['titulo']||''),
         link:     String(o['link']||o['url']||''),
       };
     }).filter(w => w.titulo);
