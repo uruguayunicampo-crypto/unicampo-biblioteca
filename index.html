@@ -4,1203 +4,591 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Unicampo — Biblioteca Técnica</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --green-dark: #0d3320;
-    --green-mid: #1a5c38;
-    --green-accent: #22a85a;
-    --green-light: #e8f5ee;
-    --blue-dark: #0d2340;
-    --blue-mid: #1a3a6b;
-    --blue-accent: #1e6fd4;
-    --white: #ffffff;
-    --off-white: #f7f8f6;
-    --gray-100: #f0f1ee;
-    --gray-200: #e2e4df;
-    --gray-400: #9aa096;
-    --gray-600: #5c6358;
-    --gray-900: #1a1f18;
-    --font-main: 'Sora', sans-serif;
-    --font-mono: 'DM Mono', monospace;
-    --radius: 10px;
-    --radius-lg: 16px;
-    --shadow: 0 2px 12px rgba(0,0,0,0.08);
-    --shadow-lg: 0 8px 32px rgba(0,0,0,0.14);
-  }
-
-  html, body { height: 100%; font-family: var(--font-main); background: var(--off-white); color: var(--gray-900); font-size: 15px; }
-
-  /* ===== LOGIN ===== */
-  #login-screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--green-dark);
-    background-image:
-      radial-gradient(ellipse 80% 60% at 20% 80%, rgba(34,168,90,0.18) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 80% at 80% 20%, rgba(13,35,64,0.6) 0%, transparent 70%);
-    padding: 1.5rem;
-  }
-
-  .login-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: var(--radius-lg);
-    padding: 3rem 2.5rem 2.5rem;
-    width: 100%;
-    max-width: 400px;
-    backdrop-filter: blur(12px);
-  }
-
-  .login-logo {
-    text-align: center;
-    margin-bottom: 2.2rem;
-  }
-
-  .login-logo img {
-    width: 190px;
-    border-radius: 8px;
-  }
-
-  .login-logo-fallback {
-    display: none;
-    color: white;
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-  }
-
-  .login-label {
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.35);
-    margin-bottom: 6px;
-    display: block;
-  }
-
-  .login-input {
-    width: 100%;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: var(--radius);
-    color: white;
-    font-family: var(--font-main);
-    font-size: 14px;
-    padding: 11px 14px;
-    margin-bottom: 1rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .login-input:focus { border-color: var(--green-accent); }
-  .login-input::placeholder { color: rgba(255,255,255,0.2); }
-
-  .login-btn {
-    width: 100%;
-    background: var(--green-accent);
-    border: none;
-    border-radius: var(--radius);
-    color: white;
-    font-family: var(--font-main);
-    font-size: 14px;
-    font-weight: 500;
-    padding: 12px;
-    cursor: pointer;
-    margin-top: 0.5rem;
-    transition: background 0.2s, transform 0.1s;
-    letter-spacing: 0.02em;
-  }
-
-  .login-btn:hover { background: #27c468; }
-  .login-btn:active { transform: scale(0.99); }
-
-  .login-error {
-    color: #ff7b7b;
-    font-size: 12px;
-    text-align: center;
-    margin-top: 0.75rem;
-    min-height: 16px;
-  }
-
-  .login-hint {
-    font-size: 10px;
-    color: rgba(255,255,255,0.15);
-    text-align: center;
-    margin-top: 1.5rem;
-    font-family: var(--font-mono);
-  }
-
-  /* ===== APP ===== */
-  #app-screen { display: none; min-height: 100vh; flex-direction: column; }
-
-  .app-header {
-    background: var(--green-dark);
-    background-image: linear-gradient(135deg, var(--green-dark) 0%, #0f2e1c 100%);
-    padding: 0 1.5rem;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    border-bottom: 1px solid rgba(255,255,255,0.07);
-  }
-
-  .header-left { display: flex; align-items: center; gap: 14px; }
-
-  .header-logo img { height: 36px; border-radius: 5px; }
-
-  .header-divider {
-    width: 1px;
-    height: 24px;
-    background: rgba(255,255,255,0.15);
-  }
-
-  .header-title {
-    font-size: 13px;
-    font-weight: 500;
-    color: rgba(255,255,255,0.8);
-    letter-spacing: 0.02em;
-  }
-
-  .header-right { display: flex; align-items: center; gap: 10px; }
-
-  .header-user {
-    font-size: 11px;
-    color: rgba(255,255,255,0.45);
-    font-family: var(--font-mono);
-  }
-
-  .btn-sm {
-    font-family: var(--font-main);
-    font-size: 11px;
-    padding: 5px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.15s;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.55);
-  }
-  .btn-sm:hover { background: rgba(255,255,255,0.12); color: white; }
-
-  .app-main { flex: 1; max-width: 1100px; margin: 0 auto; width: 100%; padding: 1.5rem; }
-
-  /* Stats */
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    margin-bottom: 1.2rem;
-  }
-
-  .stat-box {
-    background: white;
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius);
-    padding: 12px 14px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .stat-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-
-  .stat-icon.green { background: var(--green-light); }
-  .stat-icon.blue { background: #e8f0fb; }
-  .stat-icon.amber { background: #fff8e8; }
-  .stat-icon.purple { background: #f3eeff; }
-
-  .stat-info {}
-  .stat-num { font-size: 20px; font-weight: 600; color: var(--gray-900); line-height: 1; }
-  .stat-lbl { font-size: 10px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
-
-  /* Search bar */
-  .search-panel {
-    background: white;
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-lg);
-    padding: 1.2rem;
-    margin-bottom: 1.2rem;
-    box-shadow: var(--shadow);
-  }
-
-  .search-main-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-  }
-
-  .search-wrap {
-    flex: 1;
-    position: relative;
-  }
-
-  .search-wrap svg {
-    position: absolute;
-    left: 13px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--gray-400);
-    pointer-events: none;
-  }
-
-  .search-wrap input {
-    width: 100%;
-    font-family: var(--font-main);
-    font-size: 14px;
-    padding: 11px 14px 11px 40px;
-    border: 1.5px solid var(--gray-200);
-    border-radius: var(--radius);
-    background: var(--off-white);
-    color: var(--gray-900);
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-
-  .search-wrap input:focus {
-    border-color: var(--green-accent);
-    background: white;
-    box-shadow: 0 0 0 3px rgba(34,168,90,0.1);
-  }
-
-  .search-wrap input::placeholder { color: var(--gray-400); }
-
-  .btn-add-work {
-    font-family: var(--font-main);
-    font-size: 13px;
-    font-weight: 500;
-    padding: 11px 18px;
-    background: var(--green-mid);
-    color: white;
-    border: none;
-    border-radius: var(--radius);
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background 0.2s;
-  }
-  .btn-add-work:hover { background: var(--green-accent); }
-
-  .filters-row {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
-  .filter-lbl {
-    font-size: 11px;
-    color: var(--gray-400);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-right: 2px;
-  }
-
-  select.filter {
-    font-family: var(--font-main);
-    font-size: 12px;
-    padding: 6px 10px;
-    border: 1px solid var(--gray-200);
-    border-radius: 6px;
-    background: var(--off-white);
-    color: var(--gray-600);
-    cursor: pointer;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  select.filter:focus { border-color: var(--green-accent); }
-
-  .btn-clear-filters {
-    font-family: var(--font-main);
-    font-size: 11px;
-    padding: 5px 10px;
-    border: 1px solid var(--gray-200);
-    border-radius: 6px;
-    background: none;
-    color: var(--gray-400);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .btn-clear-filters:hover { color: var(--gray-900); border-color: var(--gray-400); }
-
-  /* Results */
-  .results-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .results-info {
-    font-size: 12px;
-    color: var(--gray-400);
-  }
-
-  .results-info strong { color: var(--gray-900); font-weight: 600; }
-
-  .view-switcher { display: flex; gap: 4px; }
-
-  .view-btn {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--gray-200);
-    border-radius: 6px;
-    background: white;
-    cursor: pointer;
-    color: var(--gray-400);
-    transition: all 0.15s;
-    font-size: 14px;
-  }
-  .view-btn.active { background: var(--green-dark); color: white; border-color: var(--green-dark); }
-  .view-btn:not(.active):hover { border-color: var(--gray-400); color: var(--gray-600); }
-
-  /* Cards */
-  #results-wrap.grid-view {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 12px;
-  }
-
-  #results-wrap.list-view {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .work-card {
-    background: white;
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius-lg);
-    padding: 16px;
-    cursor: pointer;
-    transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .work-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: var(--green-accent);
-    opacity: 0;
-    transition: opacity 0.15s;
-  }
-
-  .work-card:hover {
-    border-color: var(--green-accent);
-    box-shadow: var(--shadow);
-    transform: translateY(-1px);
-  }
-  .work-card:hover::before { opacity: 1; }
-
-  .card-head {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-    margin-bottom: 10px;
-  }
-
-  .file-badge {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
-  }
-
-  .file-badge.pptx { background: #fff3e0; }
-  .file-badge.pdf { background: #fce4ec; }
-  .file-badge.docx { background: #e3f2fd; }
-  .file-badge.xlsx { background: #e8f5e9; }
-
-  .card-title {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--gray-900);
-    line-height: 1.4;
-    flex: 1;
-  }
-
-  .tags-row {
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-    margin-bottom: 8px;
-  }
-
-  .tag {
-    font-size: 10px;
-    font-weight: 500;
-    padding: 3px 8px;
-    border-radius: 20px;
-    letter-spacing: 0.02em;
-  }
-
-  .tag-tema { background: #e8f5ee; color: #1a5c38; }
-  .tag-cultivo { background: #e3f2fd; color: #1a3a6b; }
-  .tag-zafra { background: #f3eeff; color: #5c3a9e; }
-  .tag-tipo { background: var(--gray-100); color: var(--gray-600); font-family: var(--font-mono); }
-
-  .card-keywords {
-    font-size: 11px;
-    color: var(--gray-400);
-    line-height: 1.5;
-    margin-bottom: 10px;
-  }
-
-  .card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 10px;
-    border-top: 1px solid var(--gray-100);
-  }
-
-  .card-author {
-    font-size: 11px;
-    color: var(--gray-400);
-    font-family: var(--font-mono);
-  }
-
-  .btn-open-file {
-    font-family: var(--font-main);
-    font-size: 11px;
-    font-weight: 500;
-    padding: 5px 12px;
-    background: var(--green-light);
-    color: var(--green-mid);
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    transition: background 0.15s;
-  }
-  .btn-open-file:hover { background: #c8ecd8; }
-
-  /* List view card */
-  .list-view .work-card { padding: 12px 16px; }
-
-  .list-card-inner {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .list-card-inner .file-badge { width: 32px; height: 32px; font-size: 15px; flex-shrink: 0; }
-
-  .list-card-content { flex: 1; min-width: 0; }
-
-  .list-card-content .card-title { margin-bottom: 4px; }
-
-  .list-card-content .tags-row { margin-bottom: 0; }
-
-  .list-card-actions { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-
-  /* Highlight */
-  mark {
-    background: #fff176;
-    color: var(--gray-900);
-    border-radius: 2px;
-    padding: 0 2px;
-  }
-
-  /* Empty state */
-  .empty-state {
-    text-align: center;
-    padding: 4rem 1rem;
-    color: var(--gray-400);
-    grid-column: 1 / -1;
-  }
-
-  .empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; }
-  .empty-state p { font-size: 14px; margin-bottom: 6px; color: var(--gray-600); }
-  .empty-state small { font-size: 12px; }
-
-  /* Loading */
-  .loading-state {
-    text-align: center;
-    padding: 3rem;
-    color: var(--gray-400);
-    grid-column: 1 / -1;
-  }
-
-  .spinner {
-    width: 28px;
-    height: 28px;
-    border: 2px solid var(--gray-200);
-    border-top-color: var(--green-accent);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    margin: 0 auto 12px;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* MODAL */
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.55);
-    z-index: 200;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-  }
-  .modal-overlay.open { display: flex; }
-
-  .modal {
-    background: white;
-    border-radius: var(--radius-lg);
-    padding: 1.8rem;
-    width: 100%;
-    max-width: 560px;
-    max-height: 90vh;
-    overflow-y: auto;
-    box-shadow: var(--shadow-lg);
-  }
-
-  .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.4rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--gray-200);
-  }
-
-  .modal-header h2 {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--gray-900);
-  }
-
-  .btn-close-modal {
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--gray-100);
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    color: var(--gray-600);
-    transition: background 0.15s;
-  }
-  .btn-close-modal:hover { background: var(--gray-200); }
-
-  .form-group { margin-bottom: 1rem; }
-
-  .form-group label {
-    display: block;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--gray-600);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 5px;
-  }
-
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    width: 100%;
-    font-family: var(--font-main);
-    font-size: 13px;
-    padding: 9px 12px;
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius);
-    background: var(--off-white);
-    color: var(--gray-900);
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    border-color: var(--green-accent);
-    background: white;
-  }
-
-  .form-group textarea { resize: vertical; min-height: 80px; }
-
-  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-  .form-hint {
-    font-size: 11px;
-    color: var(--gray-400);
-    margin-top: 4px;
-  }
-
-  .modal-actions {
-    display: flex;
-    gap: 8px;
-    justify-content: flex-end;
-    margin-top: 1.4rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--gray-200);
-  }
-
-  .btn-cancel {
-    font-family: var(--font-main);
-    font-size: 13px;
-    padding: 9px 18px;
-    border: 1px solid var(--gray-200);
-    border-radius: var(--radius);
-    background: none;
-    color: var(--gray-600);
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-  .btn-cancel:hover { background: var(--gray-100); }
-
-  .btn-save {
-    font-family: var(--font-main);
-    font-size: 13px;
-    font-weight: 500;
-    padding: 9px 22px;
-    background: var(--green-mid);
-    color: white;
-    border: none;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .btn-save:hover { background: var(--green-accent); }
-
-  /* Config banner */
-  .config-banner {
-    background: #fff8e1;
-    border: 1px solid #ffe082;
-    border-radius: var(--radius);
-    padding: 12px 16px;
-    margin-bottom: 1.2rem;
-    font-size: 12px;
-    color: #7a5c00;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .config-banner.hidden { display: none; }
-
-  /* Responsive */
-  @media (max-width: 640px) {
-    .stats-row { grid-template-columns: repeat(2, 1fr); }
-    .form-row-2 { grid-template-columns: 1fr; }
-    .header-user { display: none; }
-    #results-wrap.grid-view { grid-template-columns: 1fr; }
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#f7f8f6;color:#1a1d18;min-height:100vh}
+:root{
+  --verde:#1a5c2e;--verde-vivo:#1e8a3e;--verde-claro:#e8f5ed;
+  --gris1:#f7f8f6;--gris2:#eef0ec;--gris3:#d4d8d0;--grist:#6b7466;
+  --negro:#1a1d18;--r:10px;--rl:16px
+}
+
+/* LOGIN */
+#login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,#0f3d1f 0%,#0d2740 100%);padding:1.5rem}
+.lcard{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.13);
+  border-radius:var(--rl);padding:2.5rem 2rem;width:100%;max-width:400px}
+.llogo{text-align:center;margin-bottom:1.8rem}
+.llogo img{width:200px;height:auto;border-radius:8px}
+.llogo-txt{display:none;color:white;font-size:26px;font-weight:600;letter-spacing:.05em}
+.ltitle{color:rgba(255,255,255,.88);font-size:15px;font-weight:500;text-align:center;margin-bottom:.25rem}
+.lsub{color:rgba(255,255,255,.35);font-size:12px;text-align:center;margin-bottom:1.8rem}
+.fld{margin-bottom:1rem}
+.fld label{display:block;font-size:11px;color:rgba(255,255,255,.45);
+  text-transform:uppercase;letter-spacing:.07em;margin-bottom:5px}
+.fld input{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);
+  border-radius:var(--r);color:white;font-family:'DM Sans',sans-serif;font-size:14px;
+  padding:11px 14px;outline:none;transition:border-color .2s}
+.fld input:focus{border-color:var(--verde-vivo)}
+.fld input::placeholder{color:rgba(255,255,255,.2)}
+.btn-ing{width:100%;background:var(--verde-vivo);border:none;border-radius:var(--r);
+  color:white;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;
+  padding:12px;cursor:pointer;margin-top:.4rem;transition:background .2s}
+.btn-ing:hover{background:#22a049}
+.lerr{color:#ff7070;font-size:12px;text-align:center;margin-top:.7rem;min-height:18px}
+.lhint{color:rgba(255,255,255,.15);font-size:11px;text-align:center;margin-top:1.8rem;line-height:1.6}
+
+/* APP */
+#app-screen{display:none}
+.hdr{background:linear-gradient(135deg,#0f3d1f,#0d2740);padding:0 1.2rem;
+  display:flex;align-items:center;gap:.8rem;height:56px;
+  position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(0,0,0,.22)}
+.hdr img{height:34px;width:auto;border-radius:5px}
+.hdrsep{width:1px;height:22px;background:rgba(255,255,255,.15)}
+.hdrtit{flex:1;color:rgba(255,255,255,.82);font-size:14px;font-weight:500}
+.upill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
+  border-radius:20px;padding:4px 12px;color:rgba(255,255,255,.72);font-size:12px}
+.bsalir{background:none;border:1px solid rgba(255,255,255,.2);border-radius:var(--r);
+  color:rgba(255,255,255,.5);font-family:'DM Sans',sans-serif;font-size:11px;
+  padding:5px 12px;cursor:pointer;transition:all .2s}
+.bsalir:hover{background:rgba(255,255,255,.1);color:white}
+
+.content{max-width:1100px;margin:0 auto;padding:1.2rem}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:1.1rem}
+.stat{background:white;border:1px solid var(--gris3);border-radius:var(--r);
+  padding:11px 13px;text-align:center}
+.stn{font-size:22px;font-weight:600;color:var(--verde);line-height:1}
+.stl{font-size:10px;color:var(--grist);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
+
+/* Search */
+.sbox{background:white;border:1px solid var(--gris3);border-radius:var(--rl);
+  padding:1.1rem;margin-bottom:.9rem;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.stop{display:flex;gap:8px;margin-bottom:9px}
+.swrap{flex:1;position:relative}
+.swrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);
+  width:15px;height:15px;color:var(--grist);pointer-events:none}
+.swrap input{width:100%;padding:10px 13px 10px 35px;border:1.5px solid var(--gris3);
+  border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:14px;
+  color:var(--negro);background:var(--gris1);outline:none;transition:border-color .2s,box-shadow .2s}
+.swrap input:focus{border-color:var(--verde-vivo);background:white;
+  box-shadow:0 0 0 3px rgba(30,138,62,.08)}
+.swrap input::placeholder{color:var(--gris3)}
+.bagregar{background:var(--verde);border:none;border-radius:var(--r);color:white;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
+  padding:0 16px;cursor:pointer;white-space:nowrap;transition:background .2s}
+.bagregar:hover{background:var(--verde-vivo)}
+.breload{background:var(--gris1);border:1px solid var(--gris3);border-radius:var(--r);
+  color:var(--grist);font-family:'DM Sans',sans-serif;font-size:12px;
+  padding:0 13px;cursor:pointer;white-space:nowrap;transition:all .2s;
+  display:flex;align-items:center;gap:5px}
+.breload:hover{background:var(--gris2)}
+.filters{display:flex;gap:7px;flex-wrap:wrap}
+.filters select{padding:6px 10px;border:1px solid var(--gris3);border-radius:var(--r);
+  font-family:'DM Sans',sans-serif;font-size:12px;color:var(--grist);
+  background:var(--gris1);cursor:pointer;outline:none}
+
+/* Banner */
+.banner{background:#fff8e1;border:1px solid #ffe082;border-radius:var(--r);
+  padding:10px 14px;font-size:12px;color:#6d4c00;margin-bottom:.9rem;line-height:1.5}
+.banner.oculto{display:none}
+
+/* Results bar */
+.rbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
+.rinfo{font-size:12px;color:var(--grist)}
+.rinfo strong{color:var(--negro)}
+.vbtns{display:flex;gap:4px}
+.vb{background:white;border:1px solid var(--gris3);border-radius:var(--r);
+  color:var(--grist);font-size:12px;padding:5px 11px;cursor:pointer;transition:all .15s}
+.vb.on{background:var(--verde);border-color:var(--verde);color:white}
+
+/* Grid/Lista */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:9px}
+.lista{display:flex;flex-direction:column;gap:7px}
+
+/* Card */
+.card{background:white;border:1px solid var(--gris3);border-radius:var(--rl);
+  padding:.9rem 1rem;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .1s;
+  position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--verde-vivo);opacity:0;transition:opacity .15s}
+.card:hover{border-color:var(--verde-vivo);box-shadow:0 4px 20px rgba(0,0,0,.1);transform:translateY(-1px)}
+.card:hover::before{opacity:1}
+.chead{display:flex;gap:9px;align-items:flex-start;margin-bottom:7px}
+.tipo-icon{width:32px;height:32px;border-radius:7px;display:flex;align-items:center;
+  justify-content:center;font-size:15px;flex-shrink:0}
+.ti-pptx{background:#fff3e0}.ti-pdf{background:#fce4ec}.ti-docx{background:#e3f2fd}.ti-otro{background:#f3e5f5}
+.ctit{font-size:13px;font-weight:600;color:var(--negro);line-height:1.35;flex:1}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
+.tag{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500}
+.tt{background:#e8f5e9;color:#2e7d32}
+.tc{background:#e3f2fd;color:#1565c0}
+.tz{background:#f3e5f5;color:#6a1b9a}
+.ckw{font-size:11px;color:var(--grist);line-height:1.5;margin-bottom:9px}
+mark{background:#fff9c4;color:#7c6500;border-radius:3px;padding:0 2px}
+.cfoot{display:flex;justify-content:space-between;align-items:center;
+  padding-top:8px;border-top:1px solid var(--gris2)}
+.cautor{font-size:11px;color:var(--grist)}
+.bver{background:var(--verde-claro);border:none;border-radius:var(--r);
+  color:var(--verde);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;
+  padding:5px 11px;cursor:pointer;text-decoration:none;transition:background .15s}
+.bver:hover{background:#c8e6c9}
+
+/* Card lista */
+.clista{display:flex;align-items:center;gap:11px}
+.clista .cinfo{flex:1;min-width:0}
+.clista .caction{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+
+/* Empty/Loading */
+.empty,.loading{text-align:center;padding:3.5rem 1rem;color:var(--grist);grid-column:1/-1}
+.empty-i{font-size:38px;margin-bottom:10px}
+.empty h3{font-size:15px;color:var(--negro);margin-bottom:5px}
+.empty p{font-size:13px}
+.spinner{width:30px;height:30px;border:3px solid var(--gris2);border-top-color:var(--verde-vivo);
+  border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 10px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Modal */
+.mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.52);
+  z-index:200;align-items:center;justify-content:center;padding:1rem}
+.mbg.open{display:flex}
+.modal{background:white;border-radius:var(--rl);padding:1.6rem;
+  width:100%;max-width:520px;max-height:90vh;overflow-y:auto;
+  box-shadow:0 8px 32px rgba(0,0,0,.18)}
+.mhdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.2rem}
+.mhdr h2{font-size:16px;font-weight:600}
+.bx{background:none;border:none;font-size:22px;color:var(--grist);cursor:pointer;padding:0;line-height:1}
+.mhint{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:var(--r);
+  padding:9px 13px;font-size:12px;color:#2e7d32;margin-bottom:1.1rem;line-height:1.5}
+.mfld{margin-bottom:.9rem}
+.mfld label{display:block;font-size:11px;color:var(--grist);text-transform:uppercase;
+  letter-spacing:.06em;font-weight:600;margin-bottom:4px}
+.mfld input,.mfld select,.mfld textarea{width:100%;padding:9px 11px;
+  border:1.5px solid var(--gris3);border-radius:var(--r);
+  font-family:'DM Sans',sans-serif;font-size:13px;color:var(--negro);
+  background:var(--gris1);outline:none;transition:border-color .2s}
+.mfld input:focus,.mfld select:focus,.mfld textarea:focus{border-color:var(--verde-vivo);background:white}
+.mfld textarea{resize:vertical;min-height:70px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.mactions{display:flex;gap:7px;justify-content:flex-end;margin-top:1.2rem;
+  padding-top:1rem;border-top:1px solid var(--gris2)}
+.bcancel{background:none;border:1.5px solid var(--gris3);border-radius:var(--r);
+  color:var(--grist);font-family:'DM Sans',sans-serif;font-size:13px;
+  padding:8px 17px;cursor:pointer;transition:all .2s}
+.bcancel:hover{background:var(--gris1)}
+.bguardar{background:var(--verde);border:none;border-radius:var(--r);
+  color:white;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
+  padding:8px 20px;cursor:pointer;transition:background .2s}
+.bguardar:hover{background:var(--verde-vivo)}
+
+@media(max-width:600px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .frow{grid-template-columns:1fr}
+  .hdrtit{display:none}
+}
 </style>
 </head>
 <body>
 
-<!-- ===== LOGIN ===== -->
+<!-- LOGIN -->
 <div id="login-screen">
-  <div class="login-card">
-    <div class="login-logo">
-      <img id="login-logo-img" src="logo-unicampo.png" alt="Unicampo Uruguay"
-        onerror="this.style.display='none'; document.getElementById('logo-txt').style.display='block'">
-      <div id="logo-txt" class="login-logo-fallback">UNICAMPO<br><span style="font-size:13px;font-weight:300;opacity:0.6">URUGUAY S.R.L.</span></div>
+  <div class="lcard">
+    <div class="llogo">
+      <img src="logo-unicampo.png" alt="Unicampo Uruguay"
+           onerror="this.style.display='none';document.getElementById('ltxt').style.display='block'">
+      <div id="ltxt" class="llogo-txt">UNICAMPO</div>
     </div>
-    <label class="login-label" for="inp-user">Usuario</label>
-    <input class="login-input" id="inp-user" type="text" placeholder="usuario" autocomplete="username">
-    <label class="login-label" for="inp-pass">Contraseña</label>
-    <input class="login-input" id="inp-pass" type="password" placeholder="••••••••" autocomplete="current-password">
-    <button class="login-btn" onclick="doLogin()">Ingresar a la biblioteca</button>
-    <p class="login-error" id="login-err"></p>
-    <p class="login-hint" id="demo-hint">demo → unicampo / campo2024</p>
+    <p class="ltitle">Biblioteca Técnica</p>
+    <p class="lsub">Acceso restringido — solo personal autorizado</p>
+    <div class="fld">
+      <label>Usuario</label>
+      <input type="text" id="lu" placeholder="usuario" autocomplete="username">
+    </div>
+    <div class="fld">
+      <label>Contraseña</label>
+      <input type="password" id="lp" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn-ing" onclick="login()">Ingresar a la biblioteca</button>
+    <p class="lerr" id="lerr"></p>
+    <p class="lhint">Unicampo Uruguay S.R.L.<br>Sistema de gestión documental técnica</p>
   </div>
 </div>
 
-<!-- ===== APP ===== -->
-<div id="app-screen" style="display:none; flex-direction:column; min-height:100vh;">
-
-  <header class="app-header">
-    <div class="header-left">
-      <div class="header-logo">
-        <img src="logo-unicampo.png" alt="Unicampo"
-          onerror="this.style.display='none'">
-      </div>
-      <div class="header-divider"></div>
-      <span class="header-title">Biblioteca Técnica</span>
-    </div>
-    <div class="header-right">
-      <span class="header-user" id="hdr-user"></span>
-      <button class="btn-sm" onclick="doLogout()">Salir</button>
-    </div>
+<!-- APP -->
+<div id="app-screen">
+  <header class="hdr">
+    <img src="logo-unicampo.png" alt="Unicampo" onerror="this.style.display='none'">
+    <div class="hdrsep"></div>
+    <div class="hdrtit">Biblioteca Técnica</div>
+    <span class="upill" id="upill">—</span>
+    <button class="bsalir" onclick="logout()">Salir</button>
   </header>
 
-  <main class="app-main">
-
-    <!-- Config banner (shown when Sheet not configured) -->
-    <div class="config-banner" id="config-banner">
-      ⚠️ <span>Para conectar con Google Drive, editá el archivo <code>index.html</code> y reemplazá <strong>TU_SHEET_ID</strong> con el ID de tu Google Sheet. <a href="#" onclick="showConfigHelp()">Ver instrucciones</a></span>
+  <div class="content">
+    <div class="banner oculto" id="banner">
+      ⚠️ No conectado a Google Sheets. Mostrando datos de ejemplo. Configurá el SHEET_ID en config.js
     </div>
 
-    <!-- Stats -->
-    <div class="stats-row" id="stats-row">
-      <div class="stat-box"><div class="stat-icon green">📁</div><div class="stat-info"><div class="stat-num" id="s-total">—</div><div class="stat-lbl">Trabajos</div></div></div>
-      <div class="stat-box"><div class="stat-icon blue">🌾</div><div class="stat-info"><div class="stat-num" id="s-temas">—</div><div class="stat-lbl">Temas</div></div></div>
-      <div class="stat-box"><div class="stat-icon amber">🌱</div><div class="stat-info"><div class="stat-num" id="s-cultivos">—</div><div class="stat-lbl">Cultivos</div></div></div>
-      <div class="stat-box"><div class="stat-icon purple">📅</div><div class="stat-info"><div class="stat-num" id="s-zafras">—</div><div class="stat-lbl">Zafras</div></div></div>
+    <div class="stats">
+      <div class="stat"><div class="stn" id="st">—</div><div class="stl">Trabajos</div></div>
+      <div class="stat"><div class="stn" id="ste">—</div><div class="stl">Temas</div></div>
+      <div class="stat"><div class="stn" id="sc">—</div><div class="stl">Cultivos</div></div>
+      <div class="stat"><div class="stn" id="sz">—</div><div class="stl">Zafras</div></div>
     </div>
 
-    <!-- Search -->
-    <div class="search-panel">
-      <div class="search-main-row">
-        <div class="search-wrap">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="text" id="search-input" placeholder="Buscar: fitotoxicidad trigo, nitrógeno maíz, cultivos de servicio..." oninput="doSearch()">
+    <div class="sbox">
+      <div class="stop">
+        <div class="swrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+          <input type="text" id="si"
+            placeholder="Buscar por tema, cultivo, palabras clave... ej: fitotoxicidad trigo"
+            oninput="buscar()">
         </div>
-        <button class="btn-add-work" onclick="openAddModal()">+ Agregar trabajo</button>
+        <button class="breload" onclick="cargar()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M3 12a9 9 0 019-9 9.75 9.75 0 016.74 2.74L21 8"/>
+            <path d="M21 3v5h-5"/><path d="M21 12a9 9 0 01-9 9 9.75 9.75 0 01-6.74-2.74L3 16"/>
+            <path d="M3 21v-5h5"/>
+          </svg>
+          Actualizar
+        </button>
+        <button class="bagregar" onclick="abrirModal()">+ Agregar</button>
       </div>
-      <div class="filters-row">
-        <span class="filter-lbl">Filtrar:</span>
-        <select class="filter" id="f-tema" onchange="doSearch()"><option value="">Todos los temas</option></select>
-        <select class="filter" id="f-cultivo" onchange="doSearch()"><option value="">Todos los cultivos</option></select>
-        <select class="filter" id="f-zafra" onchange="doSearch()"><option value="">Todas las zafras</option></select>
-        <select class="filter" id="f-tipo" onchange="doSearch()">
+      <div class="filters">
+        <select id="ft" onchange="buscar()"><option value="">Todos los temas</option></select>
+        <select id="fc" onchange="buscar()"><option value="">Todos los cultivos</option></select>
+        <select id="fz" onchange="buscar()"><option value="">Todas las zafras</option></select>
+        <select id="ftp" onchange="buscar()">
           <option value="">Todos los tipos</option>
           <option value="pptx">PowerPoint</option>
           <option value="pdf">PDF</option>
           <option value="docx">Word</option>
-          <option value="xlsx">Excel</option>
         </select>
-        <button class="btn-clear-filters" onclick="clearFilters()">✕ Limpiar</button>
       </div>
     </div>
 
-    <!-- Results -->
-    <div class="results-bar">
-      <p class="results-info" id="results-info"></p>
-      <div class="view-switcher">
-        <button class="view-btn active" id="btn-grid" onclick="setView('grid')" title="Vista grilla">⊞</button>
-        <button class="view-btn" id="btn-list" onclick="setView('list')" title="Vista lista">☰</button>
+    <div class="rbar">
+      <p class="rinfo" id="rinfo"></p>
+      <div class="vbtns">
+        <button class="vb on" id="vg" onclick="setVista('grid')">▦ Grilla</button>
+        <button class="vb" id="vl" onclick="setVista('lista')">☰ Lista</button>
       </div>
     </div>
 
-    <div id="results-wrap" class="grid-view"></div>
-
-  </main>
+    <div id="res" class="grid"></div>
+  </div>
 </div>
 
-<!-- Modal agregar trabajo -->
-<div class="modal-overlay" id="modal-add">
+<!-- MODAL -->
+<div class="mbg" id="modal">
   <div class="modal">
-    <div class="modal-header">
-      <h2>Agregar nuevo trabajo</h2>
-      <button class="btn-close-modal" onclick="closeModal()">✕</button>
+    <div class="mhdr">
+      <h2>Agregar trabajo a la biblioteca</h2>
+      <button class="bx" onclick="cerrar()">×</button>
     </div>
-
-    <div class="form-group">
+    <div class="mhint">
+      💡 Completá los campos. El trabajo quedará disponible para todo el equipo.
+    </div>
+    <div class="mfld">
       <label>Título del trabajo *</label>
-      <input type="text" id="m-titulo" placeholder="Ej: Fitotoxicidad de herbicidas postemergentes en trigo — zafra 2024">
+      <input type="text" id="mt" placeholder="Ej: Efecto de herbicidas en trigo — zafra 2023/24">
     </div>
-
-    <div class="form-row-2">
-      <div class="form-group">
-        <label>Tema principal *</label>
-        <input type="text" id="m-tema" placeholder="Fitotoxicidad, Fertilidad, Malezas...">
-      </div>
-      <div class="form-group">
-        <label>Cultivo *</label>
-        <input type="text" id="m-cultivo" placeholder="Trigo, Soja, Maíz, Campo natural...">
-      </div>
+    <div class="frow">
+      <div class="mfld"><label>Tema principal *</label>
+        <input type="text" id="mte" placeholder="Ej: Fitotoxicidad"></div>
+      <div class="mfld"><label>Cultivo *</label>
+        <input type="text" id="mcu" placeholder="Ej: Trigo"></div>
     </div>
-
-    <div class="form-row-2">
-      <div class="form-group">
-        <label>Zafra / Año</label>
-        <input type="text" id="m-zafra" placeholder="2024/25">
-      </div>
-      <div class="form-group">
-        <label>Tipo de archivo</label>
-        <select id="m-tipo">
+    <div class="frow">
+      <div class="mfld"><label>Zafra / Año</label>
+        <input type="text" id="mz" placeholder="Ej: 2023/24"></div>
+      <div class="mfld"><label>Tipo de archivo</label>
+        <select id="mtp">
           <option value="pptx">PowerPoint (.pptx)</option>
           <option value="pdf">PDF</option>
-          <option value="docx">Word (.docx)</option>
-          <option value="xlsx">Excel (.xlsx)</option>
+          <option value="docx">Word</option>
+          <option value="otro">Otro</option>
         </select>
       </div>
     </div>
-
-    <div class="form-group">
-      <label>Palabras clave (separar con comas)</label>
-      <input type="text" id="m-keywords" placeholder="herbicida, daño foliar, 2,4-D, recuperación, hoja bandera">
-      <p class="form-hint">Estas palabras permiten que el buscador encuentre el trabajo por conceptos específicos</p>
+    <div class="mfld">
+      <label>Link de Google Drive (URL del archivo)</label>
+      <input type="text" id="ml" placeholder="https://drive.google.com/file/d/...">
     </div>
-
-    <div class="form-group">
-      <label>Resumen / Descripción breve</label>
-      <textarea id="m-resumen" placeholder="Descripción del trabajo, metodología, resultados principales o conclusiones..."></textarea>
+    <div class="mfld">
+      <label>Palabras clave (separadas por coma)</label>
+      <input type="text" id="mk" placeholder="herbicida, toxicidad, hoja bandera, daño foliar">
     </div>
-
-    <div class="form-row-2">
-      <div class="form-group">
-        <label>Autor / Expositor</label>
-        <input type="text" id="m-autor" placeholder="Ing. García">
-      </div>
-      <div class="form-group">
-        <label>Nombre del archivo</label>
-        <input type="text" id="m-archivo" placeholder="fitotox_trigo_2024.pptx">
-      </div>
+    <div class="mfld">
+      <label>Resumen / Descripción</label>
+      <textarea id="mr" placeholder="Descripción breve, metodología, conclusiones..."></textarea>
     </div>
-
-    <div class="form-group">
-      <label>Link de Google Drive (opcional)</label>
-      <input type="text" id="m-link" placeholder="https://drive.google.com/file/d/...">
-      <p class="form-hint">Pegá el link de compartir del archivo en Drive para abrir directo desde la app</p>
+    <div class="frow">
+      <div class="mfld"><label>Autor / Expositor</label>
+        <input type="text" id="mau" placeholder="Ej: Ing. García"></div>
+      <div class="mfld"><label>Nombre del archivo</label>
+        <input type="text" id="mar" placeholder="fitotox_trigo_2023.pptx"></div>
     </div>
-
-    <div class="modal-actions">
-      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
-      <button class="btn-save" onclick="saveWork()">Guardar trabajo</button>
+    <div class="mactions">
+      <button class="bcancel" onclick="cerrar()">Cancelar</button>
+      <button class="bguardar" onclick="guardar()">Guardar en biblioteca</button>
     </div>
   </div>
 </div>
 
+<script src="config.js"></script>
 <script>
-// ============================================================
-// CONFIGURACIÓN — editá estos valores
-// ============================================================
-const CONFIG = {
-  // Pegá acá el ID de tu Google Sheet (ver instrucciones abajo)
-  // Ejemplo: "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms"
-  SHEET_ID: "TU_SHEET_ID",
-
-  // Nombre de la pestaña en tu Google Sheet
-  SHEET_TAB: "Biblioteca",
-
-  // Usuarios con acceso (usuario: contraseña)
-  // IMPORTANTE: cambiar estas claves antes de publicar
-  USERS: {
-    "unicampo":  "campo2024",
-    "tecnico1":  "uni2025",
-    "tecnico2":  "uni2025"
-  }
+// ---- CONFIG ----
+const USUARIOS = window.UNICAMPO_CONFIG?.usuarios || {
+  'admin':    {pass:'Unicampo2024!', nombre:'Administrador'},
+  'tecnico1': {pass:'Campo2024!',    nombre:'Técnico 1'},
+  'tecnico2': {pass:'Campo2024!',    nombre:'Técnico 2'},
 };
-// ============================================================
+const SHEET_ID   = window.UNICAMPO_CONFIG?.sheetId   || '';
+const SHEET_NAME = window.UNICAMPO_CONFIG?.sheetName || 'Biblioteca';
 
-let library = [];
-let currentView = 'grid';
-let currentUser = null;
-let usingSheet = false;
-
-// ---- DATOS DE DEMO (se usan si no hay Sheet configurado) ----
-const DEMO_DATA = [
-  { titulo:"Fitotoxicidad de herbicidas postemergentes en trigo — evaluación de síntomas y recuperación", tema:"Fitotoxicidad", cultivo:"Trigo", zafra:"2023/24", tipo:"pptx", keywords:"herbicida, toxicidad, hoja bandera, daño foliar, 2,4-D, MCPA, recuperación", resumen:"Evaluación de daños por aplicación de herbicidas en distintos estadios del trigo.", autor:"Ing. Rodríguez", archivo:"fitotox_trigo_2023.pptx", link:"" },
-  { titulo:"Nitrógeno en suelo — curvas de dilución y eficiencia de fertilización en cultivos de invierno", tema:"Fertilidad de suelos", cultivo:"Trigo", zafra:"2022/23", tipo:"pptx", keywords:"nitrógeno, nitrato, eficiencia, curva de dilución, NUE, fraccionamiento", resumen:"Análisis de curvas de dilución de N en trigo y cebada. Comparación de estrategias de fraccionamiento.", autor:"Ing. García", archivo:"N_dilucion_invierno_2022.pptx", link:"" },
-  { titulo:"Cultivos de servicio como supresores de malezas — resultados zafra 2023", tema:"Cultivos de servicio", cultivo:"Soja", zafra:"2023/24", tipo:"pptx", keywords:"cover crops, supresión, malezas, ryegrass, avena, biomasa, alelopatía, soja", resumen:"Ensayo comparativo de distintas especies usadas como cultivos de servicio y su efecto supresor.", autor:"Ing. Martínez", archivo:"cultivos_servicio_2023.pptx", link:"" },
-  { titulo:"Manejo de nitrógeno en maíz — respuesta a dosis y momento de aplicación", tema:"Fertilidad de suelos", cultivo:"Maíz", zafra:"2022/23", tipo:"pptx", keywords:"nitrógeno, urea, maíz, estadio V6, fraccionamiento, rendimiento", resumen:"Experimento con 6 dosis de N en maíz de primera, evaluando momento de aplicación.", autor:"Ing. García", archivo:"N_maiz_2022.pptx", link:"" },
-  { titulo:"Ganadería sobre campo natural — carga animal y performance en recría", tema:"Ganadería", cultivo:"Campo natural", zafra:"2022/23", tipo:"pptx", keywords:"campo natural, carga animal, recría, novillos, GDP, condición corporal, pastoreo rotativo", resumen:"Seguimiento de recría vacuna en campo natural basáltico con distintas cargas.", autor:"Ing. Techeira", archivo:"recria_CN_2022.pptx", link:"" },
-  { titulo:"Fungicidas en trigo — timing de aplicación y control de mancha amarilla", tema:"Fitopatología", cultivo:"Trigo", zafra:"2023/24", tipo:"pptx", keywords:"fungicida, mancha amarilla, Drechslera, trigo, estrobilurina, triazol, Z37, Z49", resumen:"Ensayo de timing de aplicación de fungicidas en trigo para control de mancha amarilla.", autor:"Ing. Rodríguez", archivo:"fungic_trigo_2023.pptx", link:"" },
-  { titulo:"Soja de segunda — densidad de siembra y arreglo espacial en distintos ambientes", tema:"Manejo de cultivos", cultivo:"Soja", zafra:"2022/23", tipo:"pptx", keywords:"soja, densidad, arreglo espacial, segunda fecha, rendimiento, canopia", resumen:"Evaluación de densidades de 15 a 40 plantas/m2 en soja de segunda en litoral.", autor:"Ing. Pérez", archivo:"soja2_densidad_2022.pptx", link:"" },
-  { titulo:"Eficiencia de uso de agua en cultivos de secano — indicadores y benchmarks", tema:"Manejo de cultivos", cultivo:"Trigo", zafra:"2021/22", tipo:"pptx", keywords:"agua, eficiencia, secano, WUE, precipitación, estrés hídrico, rendimiento", resumen:"Análisis de eficiencia de uso de agua en trigo, cebada y colza en diferentes años.", autor:"Ing. García", archivo:"agua_secano_2021.pptx", link:"" },
+// ---- DEMO DATA ----
+const DEMO = [
+  {titulo:'Fitotoxicidad de herbicidas postemergentes en trigo — evaluación de síntomas y recuperación',tema:'Fitotoxicidad',cultivo:'Trigo',zafra:'2023/24',tipo:'pptx',keywords:'herbicida, toxicidad, hoja bandera, daño foliar, 2,4-D, MCPA, recuperación',resumen:'Evaluación de daños por herbicidas en distintos estadios del trigo. Síntomas y recuperación.',autor:'Ing. Rodríguez',archivo:'fitotox_trigo_2023.pptx',link:''},
+  {titulo:'Nitrógeno en suelo — curvas de dilución y eficiencia de fertilización en invierno',tema:'Fertilidad de suelos',cultivo:'Trigo',zafra:'2022/23',tipo:'pptx',keywords:'nitrógeno, nitrato, curva de dilución, NUE, fraccionamiento',resumen:'Curvas de dilución de N en trigo y cebada. Comparación de estrategias de fraccionamiento.',autor:'Ing. García',archivo:'N_dilucion_2022.pptx',link:''},
+  {titulo:'Cultivos de servicio como supresores de malezas — resultados zafra 2023',tema:'Cultivos de servicio',cultivo:'Soja',zafra:'2023/24',tipo:'pptx',keywords:'cover crops, supresión, malezas, ryegrass, avena, biomasa, alelopatía',resumen:'Ensayo comparativo de cultivos de servicio y efecto supresor sobre malezas estivales.',autor:'Ing. Martínez',archivo:'cultivos_servicio_2023.pptx',link:''},
+  {titulo:'Manejo de nitrógeno en maíz — dosis y momento de aplicación',tema:'Fertilidad de suelos',cultivo:'Maíz',zafra:'2022/23',tipo:'pptx',keywords:'nitrógeno, urea, maíz, V6, fraccionamiento, rendimiento',resumen:'6 dosis de N en maíz de primera. Momento de aplicación y respuesta productiva.',autor:'Ing. García',archivo:'N_maiz_2022.pptx',link:''},
+  {titulo:'Fungicidas en trigo — timing de aplicación y control de mancha amarilla',tema:'Fitopatología',cultivo:'Trigo',zafra:'2023/24',tipo:'pptx',keywords:'fungicida, mancha amarilla, Drechslera, trigo, estrobilurina, triazol',resumen:'Timing de fungicidas en trigo para control de mancha amarilla. ABCPE y rendimiento.',autor:'Ing. Rodríguez',archivo:'fungic_trigo_2023.pptx',link:''},
+  {titulo:'Ganadería sobre campo natural — carga animal y performance en recría',tema:'Ganadería',cultivo:'Campo natural',zafra:'2022/23',tipo:'pptx',keywords:'campo natural, carga animal, recría, novillos, GDP, condición corporal',resumen:'Recría vacuna en campo natural basáltico con distintas cargas. GDP y eficiencia.',autor:'Ing. Techeira',archivo:'recria_CN_2022.pptx',link:''},
+  {titulo:'Soja de segunda — densidad de siembra y arreglo espacial',tema:'Manejo de cultivos',cultivo:'Soja',zafra:'2022/23',tipo:'pptx',keywords:'soja, densidad, segunda fecha, ambientes, rendimiento',resumen:'Densidades 15–40 pl/m2 en soja de segunda en distintos suelos del litoral.',autor:'Ing. Pérez',archivo:'soja2_densidad_2022.pptx',link:''},
+  {titulo:'Eficiencia de insecticidas foliares en soja — control de chinche y trips',tema:'Entomología',cultivo:'Soja',zafra:'2023/24',tipo:'pptx',keywords:'insecticida, chinche, Nezara, trips, soja, piretroide',resumen:'Moléculas insecticidas para control de plagas en soja R3-R5.',autor:'Ing. López',archivo:'insect_soja_2023.pptx',link:''},
 ];
 
-// ---- LOGIN ----
-function doLogin() {
-  const u = document.getElementById('inp-user').value.trim();
-  const p = document.getElementById('inp-pass').value;
-  const err = document.getElementById('login-err');
-  if (CONFIG.USERS[u] && CONFIG.USERS[u] === p) {
-    currentUser = u;
-    document.getElementById('hdr-user').textContent = u;
+// ---- STATE ----
+let bib = [];
+let vista = 'grid';
+let usr = null;
+
+// ---- AUTH ----
+function login(){
+  const u = document.getElementById('lu').value.trim();
+  const p = document.getElementById('lp').value;
+  const e = document.getElementById('lerr');
+  if(USUARIOS[u] && USUARIOS[u].pass === p){
+    usr = {user:u, nombre:USUARIOS[u].nombre};
+    document.getElementById('upill').textContent = USUARIOS[u].nombre;
     document.getElementById('login-screen').style.display = 'none';
-    const app = document.getElementById('app-screen');
-    app.style.display = 'flex';
-    err.textContent = '';
-    initApp();
+    document.getElementById('app-screen').style.display = 'block';
+    e.textContent = '';
+    cargar();
   } else {
-    err.textContent = 'Usuario o contraseña incorrectos';
-    document.getElementById('inp-pass').value = '';
+    e.textContent = 'Usuario o contraseña incorrectos';
+    document.getElementById('lp').value = '';
   }
 }
 
-document.getElementById('inp-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
-document.getElementById('inp-user').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('inp-pass').focus(); });
-
-function doLogout() {
-  currentUser = null;
-  document.getElementById('app-screen').style.display = 'none';
+function logout(){
+  usr = null;
   document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('inp-user').value = '';
-  document.getElementById('inp-pass').value = '';
-  document.getElementById('search-input').value = '';
+  document.getElementById('app-screen').style.display = 'none';
+  document.getElementById('lu').value = '';
+  document.getElementById('lp').value = '';
+  document.getElementById('si').value = '';
 }
 
-// ---- INIT ----
-async function initApp() {
-  const banner = document.getElementById('config-banner');
-  if (CONFIG.SHEET_ID === "TU_SHEET_ID") {
-    banner.classList.remove('hidden');
-    library = [...DEMO_DATA];
-    usingSheet = false;
-  } else {
-    banner.classList.add('hidden');
-    usingSheet = true;
-    showLoading();
-    await loadFromSheet();
+document.getElementById('lp').addEventListener('keydown', e => { if(e.key==='Enter') login(); });
+document.getElementById('lu').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('lp').focus(); });
+
+// ---- CARGAR DATOS ----
+async function cargar(){
+  if(!SHEET_ID){
+    document.getElementById('banner').classList.remove('oculto');
+    bib = [...DEMO];
+    stats(); filtros(); buscar(); return;
   }
-  renderStats();
-  populateFilters();
-  doSearch();
-}
-
-// ---- GOOGLE SHEETS LOADER ----
-async function loadFromSheet() {
+  document.getElementById('banner').classList.add('oculto');
+  document.getElementById('res').innerHTML = '<div class="loading"><div class="spinner"></div><p>Cargando biblioteca...</p></div>';
   try {
-    const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(CONFIG.SHEET_TAB)}`;
-    const res = await fetch(url);
-    const text = await res.text();
-    const json = JSON.parse(text.substring(47, text.length - 2));
-    const rows = json.table.rows;
-    library = rows.map(r => ({
-      titulo:   cell(r,0), tema:     cell(r,1),
-      cultivo:  cell(r,2), zafra:    cell(r,3),
-      tipo:     cell(r,4) || 'pptx', keywords: cell(r,5),
-      resumen:  cell(r,6), autor:    cell(r,7),
-      archivo:  cell(r,8), link:     cell(r,9)
-    })).filter(w => w.titulo);
-  } catch(e) {
-    library = [...DEMO_DATA];
-    document.getElementById('config-banner').classList.remove('hidden');
-    document.getElementById('config-banner').innerHTML = '⚠️ No se pudo conectar con Google Sheets. Verificá que el Sheet sea público (solo lectura). Mostrando datos de ejemplo.';
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+    const r = await fetch(url);
+    const txt = await r.text();
+    const json = JSON.parse(txt.substring(47).slice(0,-2));
+    const cols = json.table.cols.map(c => c.label.toLowerCase().trim());
+    bib = json.table.rows.map(row => {
+      const o = {};
+      cols.forEach((col,i) => { o[col] = row.c[i]?.v ?? ''; });
+      return {
+        titulo:   String(o['titulo']||o['title']||''),
+        tema:     String(o['tema']||''),
+        cultivo:  String(o['cultivo']||''),
+        zafra:    String(o['zafra']||o['año']||''),
+        tipo:     String(o['tipo']||'pptx').toLowerCase(),
+        keywords: String(o['palabras clave']||o['keywords']||''),
+        resumen:  String(o['resumen']||o['descripcion']||''),
+        autor:    String(o['autor']||''),
+        archivo:  String(o['archivo']||''),
+        link:     String(o['link']||o['url']||''),
+      };
+    }).filter(w => w.titulo);
+  } catch(err){
+    console.error(err);
+    bib = [...DEMO];
+    document.getElementById('banner').classList.remove('oculto');
   }
+  stats(); filtros(); buscar();
 }
 
-function cell(row, i) {
-  return row.c && row.c[i] && row.c[i].v ? String(row.c[i].v).trim() : '';
+function stats(){
+  document.getElementById('st').textContent  = bib.length;
+  document.getElementById('ste').textContent = new Set(bib.map(w=>w.tema)).size;
+  document.getElementById('sc').textContent  = new Set(bib.map(w=>w.cultivo)).size;
+  document.getElementById('sz').textContent  = new Set(bib.map(w=>w.zafra)).size;
 }
 
-function showLoading() {
-  document.getElementById('results-wrap').innerHTML = '<div class="loading-state"><div class="spinner"></div><p style="font-size:13px">Cargando biblioteca...</p></div>';
+function filtros(){
+  const fill = (id, arr, def) => {
+    const sel = document.getElementById(id);
+    const val = sel.value;
+    sel.innerHTML = `<option value="">${def}</option>`;
+    [...new Set(arr.filter(Boolean))].sort().forEach(v => {
+      const o = document.createElement('option');
+      o.value = v; o.textContent = v; sel.appendChild(o);
+    });
+    sel.value = val;
+  };
+  fill('ft', bib.map(w=>w.tema),    'Todos los temas');
+  fill('fc', bib.map(w=>w.cultivo), 'Todos los cultivos');
+  fill('fz', bib.map(w=>w.zafra),   'Todas las zafras');
 }
 
-// ---- STATS ----
-function renderStats() {
-  document.getElementById('s-total').textContent = library.length;
-  document.getElementById('s-temas').textContent = new Set(library.map(w=>w.tema).filter(Boolean)).size;
-  document.getElementById('s-cultivos').textContent = new Set(library.map(w=>w.cultivo).filter(Boolean)).size;
-  document.getElementById('s-zafras').textContent = new Set(library.map(w=>w.zafra).filter(Boolean)).size;
-}
+// ---- BÚSQUEDA ----
+function buscar(){
+  const q   = document.getElementById('si').value.toLowerCase().trim();
+  const fT  = document.getElementById('ft').value;
+  const fC  = document.getElementById('fc').value;
+  const fZ  = document.getElementById('fz').value;
+  const fTp = document.getElementById('ftp').value;
+  const pal = q.split(/\s+/).filter(Boolean);
 
-// ---- FILTERS ----
-function populateFilters() {
-  fillSelect('f-tema',    library.map(w=>w.tema),    'Todos los temas');
-  fillSelect('f-cultivo', library.map(w=>w.cultivo), 'Todos los cultivos');
-  fillSelect('f-zafra',   library.map(w=>w.zafra),   'Todas las zafras');
-}
-
-function fillSelect(id, vals, placeholder) {
-  const sel = document.getElementById(id);
-  const cur = sel.value;
-  sel.innerHTML = `<option value="">${placeholder}</option>`;
-  [...new Set(vals.filter(Boolean))].sort().forEach(v => {
-    const o = document.createElement('option');
-    o.value = v; o.textContent = v; sel.appendChild(o);
-  });
-  if (cur) sel.value = cur;
-}
-
-function clearFilters() {
-  document.getElementById('search-input').value = '';
-  document.getElementById('f-tema').value = '';
-  document.getElementById('f-cultivo').value = '';
-  document.getElementById('f-zafra').value = '';
-  document.getElementById('f-tipo').value = '';
-  doSearch();
-}
-
-// ---- SEARCH ----
-function doSearch() {
-  const q = document.getElementById('search-input').value.toLowerCase().trim();
-  const fTema    = document.getElementById('f-tema').value;
-  const fCultivo = document.getElementById('f-cultivo').value;
-  const fZafra   = document.getElementById('f-zafra').value;
-  const fTipo    = document.getElementById('f-tipo').value;
-
-  const words = q ? q.split(/\s+/).filter(Boolean) : [];
-
-  const results = library.filter(w => {
-    const blob = [w.titulo, w.tema, w.cultivo, w.keywords, w.resumen, w.autor, w.zafra, w.archivo].join(' ').toLowerCase();
-    const matchQ = words.length === 0 || words.every(wd => blob.includes(wd));
-    return matchQ
-      && (!fTema    || w.tema    === fTema)
-      && (!fCultivo || w.cultivo === fCultivo)
-      && (!fZafra   || w.zafra   === fZafra)
-      && (!fTipo    || w.tipo    === fTipo);
+  const res = bib.filter(w => {
+    const txt = [w.titulo,w.tema,w.cultivo,w.keywords,w.resumen,w.autor,w.zafra,w.archivo].join(' ').toLowerCase();
+    const mq = pal.length===0 || pal.every(p => txt.includes(p));
+    return mq && (!fT||w.tema===fT) && (!fC||w.cultivo===fC) && (!fZ||w.zafra===fZ) && (!fTp||w.tipo===fTp);
   });
 
-  const info = document.getElementById('results-info');
-  if (words.length || fTema || fCultivo || fZafra || fTipo) {
-    info.innerHTML = `<strong>${results.length}</strong> resultado${results.length!==1?'s':''} encontrado${results.length!==1?'s':''}${q ? ` para <em>"${q}"</em>` : ''}`;
+  const n = res.length;
+  const info = document.getElementById('rinfo');
+  if(q||fT||fC||fZ||fTp){
+    info.innerHTML = `<strong>${n}</strong> resultado${n!==1?'s':''} encontrado${n!==1?'s':''}${q?` para "<strong>${q}</strong>"`:''}`;
   } else {
-    info.innerHTML = `<strong>${results.length}</strong> trabajos en la biblioteca`;
+    info.innerHTML = `<strong>${n}</strong> trabajo${n!==1?'s':''} en la biblioteca`;
   }
-
-  renderResults(results, q);
+  render(res, q);
 }
 
 // ---- RENDER ----
-function hl(text, q) {
-  if (!q || !text) return text || '';
-  const words = q.trim().split(/\s+/).filter(Boolean);
-  let out = String(text);
-  words.forEach(w => {
-    const re = new RegExp(`(${w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
-    out = out.replace(re, '<mark>$1</mark>');
+function hl(txt, q){
+  if(!q||!txt) return txt||'';
+  const pal = q.trim().split(/\s+/).filter(Boolean);
+  let r = String(txt);
+  pal.forEach(p => {
+    const re = new RegExp(`(${p.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi');
+    r = r.replace(re, '<mark>$1</mark>');
   });
-  return out;
+  return r;
 }
 
-function typeIcon(t) {
-  return t==='pptx'?'📊': t==='pdf'?'📄': t==='docx'?'📝': t==='xlsx'?'📈': '📁';
-}
+const ico = t => ({pptx:'📊',pdf:'📄',docx:'📝'})[t]||'📁';
 
-function renderResults(results, q) {
-  const wrap = document.getElementById('results-wrap');
-  wrap.className = currentView === 'grid' ? 'grid-view' : 'list-view';
-
-  if (results.length === 0) {
-    wrap.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><p>No se encontraron trabajos</p><small>Probá con otras palabras clave o quitá algunos filtros</small></div>`;
+function render(lista, q){
+  const cont = document.getElementById('res');
+  cont.className = vista==='grid' ? 'grid' : 'lista';
+  if(!lista.length){
+    cont.innerHTML = `<div class="empty"><div class="empty-i">🔍</div><h3>Sin resultados</h3><p>Probá con otras palabras clave o quitá filtros</p></div>`;
     return;
   }
-
-  if (currentView === 'grid') {
-    wrap.innerHTML = results.map((w,i) => `
-      <div class="work-card" style="animation-delay:${i*0.03}s">
-        <div class="card-head">
-          <div class="file-badge ${w.tipo||'pptx'}">${typeIcon(w.tipo)}</div>
-          <div class="card-title">${hl(w.titulo, q)}</div>
+  if(vista==='grid'){
+    cont.innerHTML = lista.map(w => `
+      <div class="card">
+        <div class="chead">
+          <div class="tipo-icon ti-${w.tipo}">${ico(w.tipo)}</div>
+          <div class="ctit">${hl(w.titulo,q)}</div>
         </div>
-        <div class="tags-row">
-          ${w.tema    ? `<span class="tag tag-tema">${w.tema}</span>` : ''}
-          ${w.cultivo ? `<span class="tag tag-cultivo">${w.cultivo}</span>` : ''}
-          ${w.zafra   ? `<span class="tag tag-zafra">${w.zafra}</span>` : ''}
-          <span class="tag tag-tipo">${(w.tipo||'pptx').toUpperCase()}</span>
+        <div class="tags">
+          <span class="tag tt">${w.tema}</span>
+          <span class="tag tc">${w.cultivo}</span>
+          ${w.zafra?`<span class="tag tz">${w.zafra}</span>`:''}
         </div>
-        ${w.keywords ? `<p class="card-keywords">${hl(w.keywords, q)}</p>` : ''}
-        <div class="card-footer">
-          <span class="card-author">${w.autor||''}</span>
+        ${w.keywords?`<p class="ckw">${hl(w.keywords,q)}</p>`:''}
+        <div class="cfoot">
+          <span class="cautor">${w.autor||''}</span>
           ${w.link
-            ? `<a class="btn-open-file" href="${w.link}" target="_blank" rel="noopener">Abrir en Drive ↗</a>`
-            : `<span class="btn-open-file" style="opacity:0.4;cursor:default">Sin link</span>`}
+            ?`<a class="bver" href="${w.link}" target="_blank" rel="noopener">Abrir en Drive →</a>`
+            :`<button class="bver" onclick='detalle(${JSON.stringify(w)})'>Ver detalle →</button>`}
         </div>
-      </div>
-    `).join('');
+      </div>`).join('');
   } else {
-    wrap.innerHTML = results.map((w,i) => `
-      <div class="work-card">
-        <div class="list-card-inner">
-          <div class="file-badge ${w.tipo||'pptx'}" style="width:32px;height:32px;font-size:15px">${typeIcon(w.tipo)}</div>
-          <div class="list-card-content">
-            <div class="card-title">${hl(w.titulo, q)}</div>
-            <div class="tags-row" style="margin-top:4px">
-              ${w.tema    ? `<span class="tag tag-tema">${w.tema}</span>` : ''}
-              ${w.cultivo ? `<span class="tag tag-cultivo">${w.cultivo}</span>` : ''}
-              ${w.zafra   ? `<span class="tag tag-zafra">${w.zafra}</span>` : ''}
+    cont.innerHTML = lista.map(w => `
+      <div class="card">
+        <div class="clista">
+          <div class="tipo-icon ti-${w.tipo}">${ico(w.tipo)}</div>
+          <div class="cinfo">
+            <div class="ctit">${hl(w.titulo,q)}</div>
+            <div class="tags" style="margin-top:4px">
+              <span class="tag tt">${w.tema}</span>
+              <span class="tag tc">${w.cultivo}</span>
+              ${w.zafra?`<span class="tag tz">${w.zafra}</span>`:''}
             </div>
           </div>
-          <div class="list-card-actions">
-            <span class="card-author">${w.autor||''}</span>
+          <div class="caction">
+            <span class="cautor">${w.autor||''}</span>
             ${w.link
-              ? `<a class="btn-open-file" href="${w.link}" target="_blank" rel="noopener">Abrir ↗</a>`
-              : `<span class="btn-open-file" style="opacity:0.35;cursor:default;font-size:10px">Sin link</span>`}
+              ?`<a class="bver" href="${w.link}" target="_blank" rel="noopener">Abrir →</a>`
+              :`<button class="bver" onclick='detalle(${JSON.stringify(w)})'>Ver →</button>`}
           </div>
         </div>
-      </div>
-    `).join('');
+      </div>`).join('');
   }
 }
 
-function setView(v) {
-  currentView = v;
-  document.getElementById('btn-grid').classList.toggle('active', v==='grid');
-  document.getElementById('btn-list').classList.toggle('active', v==='list');
-  doSearch();
+function setVista(v){
+  vista = v;
+  document.getElementById('vg').classList.toggle('on', v==='grid');
+  document.getElementById('vl').classList.toggle('on', v==='lista');
+  buscar();
+}
+
+function detalle(w){
+  alert(`📋 ${w.titulo}\n\nTema: ${w.tema}\nCultivo: ${w.cultivo}\nZafra: ${w.zafra}\nAutor: ${w.autor}\nArchivo: ${w.archivo}\n\nResumen:\n${w.resumen}\n\nPalabras clave:\n${w.keywords}`);
 }
 
 // ---- MODAL ----
-function openAddModal() { document.getElementById('modal-add').classList.add('open'); }
-
-function closeModal() {
-  document.getElementById('modal-add').classList.remove('open');
-  ['m-titulo','m-tema','m-cultivo','m-zafra','m-keywords','m-resumen','m-autor','m-archivo','m-link'].forEach(id => {
+function abrirModal(){ document.getElementById('modal').classList.add('open'); }
+function cerrar(){
+  document.getElementById('modal').classList.remove('open');
+  ['mt','mte','mcu','mz','ml','mk','mr','mau','mar'].forEach(id => {
     const el = document.getElementById(id);
-    if (el.tagName === 'SELECT') el.selectedIndex = 0;
-    else el.value = '';
+    if(el.tagName==='SELECT') el.selectedIndex=0; else el.value='';
   });
 }
 
-function saveWork() {
-  const titulo = document.getElementById('m-titulo').value.trim();
-  if (!titulo) { alert('El título es obligatorio'); return; }
+function guardar(){
+  const titulo = document.getElementById('mt').value.trim();
+  if(!titulo){ alert('El título es obligatorio'); return; }
   const w = {
     titulo,
-    tema:     document.getElementById('m-tema').value.trim() || 'Sin clasificar',
-    cultivo:  document.getElementById('m-cultivo').value.trim() || 'General',
-    zafra:    document.getElementById('m-zafra').value.trim() || '—',
-    tipo:     document.getElementById('m-tipo').value,
-    keywords: document.getElementById('m-keywords').value.trim(),
-    resumen:  document.getElementById('m-resumen').value.trim(),
-    autor:    document.getElementById('m-autor').value.trim() || currentUser,
-    archivo:  document.getElementById('m-archivo').value.trim(),
-    link:     document.getElementById('m-link').value.trim(),
+    tema:     document.getElementById('mte').value.trim()||'Sin clasificar',
+    cultivo:  document.getElementById('mcu').value.trim()||'General',
+    zafra:    document.getElementById('mz').value.trim()||'—',
+    tipo:     document.getElementById('mtp').value,
+    link:     document.getElementById('ml').value.trim(),
+    keywords: document.getElementById('mk').value.trim(),
+    resumen:  document.getElementById('mr').value.trim(),
+    autor:    document.getElementById('mau').value.trim()||usr?.nombre||'',
+    archivo:  document.getElementById('mar').value.trim()||titulo.toLowerCase().replace(/\s+/g,'_')+'.pptx',
   };
-
-  if (usingSheet) {
-    alert('Para agregar trabajos permanentemente, agregá la fila directamente en tu Google Sheet. Los cambios se verán al recargar la app.\n\nPor ahora se agrega solo en esta sesión.');
-  }
-
-  library.unshift(w);
-  closeModal();
-  renderStats();
-  populateFilters();
-  doSearch();
-}
-
-function showConfigHelp() {
-  alert(
-    "CÓMO CONECTAR CON GOOGLE SHEETS:\n\n" +
-    "1. Creá una Google Sheet con estas columnas (en orden):\n" +
-    "   A: Titulo | B: Tema | C: Cultivo | D: Zafra | E: Tipo\n" +
-    "   F: Keywords | G: Resumen | H: Autor | I: Archivo | J: Link Drive\n\n" +
-    "2. Poné el nombre 'Biblioteca' a la pestaña\n\n" +
-    "3. Publicá el sheet: Archivo → Compartir → Publicar en la web → CSV\n\n" +
-    "4. Copiá el ID del Sheet de la URL:\n" +
-    "   docs.google.com/spreadsheets/d/[ESTE-ES-EL-ID]/edit\n\n" +
-    "5. Pegá ese ID en el archivo index.html donde dice TU_SHEET_ID"
-  );
+  bib.unshift(w);
+  cerrar(); stats(); filtros(); buscar();
+  if(!SHEET_ID) alert('✅ Trabajo agregado.\n\nPara guardarlo permanentemente, agregalo también en tu Google Sheet.');
 }
 </script>
 </body>
