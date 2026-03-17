@@ -1,30 +1,17 @@
 // ============================================================
-//  UNICAMPO — BIBLIOTECA TÉCNICA
-//  Archivo de configuración
-//  Editá este archivo para personalizar la app
+//  UNICAMPO — BIBLIOTECA TÉCNICA — Configuración
 // ============================================================
 
 window.UNICAMPO_CONFIG = {
 
-  // ----------------------------------------------------------
-  // 1. GOOGLE SHEET ID
-  //    Pegá aquí el ID de tu Google Sheet (ver INSTRUCCIONES.md)
-  //    Ejemplo: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgVE2upms'
-  // ----------------------------------------------------------
+  // 1. ID de tu Google Sheet
+  //    Copiá solo el ID de la URL (entre /d/ y /edit)
   sheetId: '1aREYK5M4AopxuJo6Bl2UjMEyxXl-Mrfn-7lnaWCmZ5U',
 
-  // ----------------------------------------------------------
-  // 2. NOMBRE DE LA HOJA
-  //    Nombre de la pestaña dentro del Google Sheet
-  //    Por defecto: 'Biblioteca'
-  // ----------------------------------------------------------
+  // 2. Nombre de la pestaña del Sheet
   sheetName: 'Biblioteca',
 
-  // ----------------------------------------------------------
-  // 3. USUARIOS AUTORIZADOS
-  //    Formato: 'usuario': { pass: 'contraseña', nombre: 'Nombre que aparece' }
-  //    IMPORTANTE: Cambiá las contraseñas antes de publicar
-  // ----------------------------------------------------------
+  // 3. Usuarios autorizados
   usuarios: {
     'admin':     { pass: 'Unicampo2024!', nombre: 'Administrador' },
     'tecnico1':  { pass: 'Campo2024!',    nombre: 'Técnico 1' },
