@@ -3,8 +3,8 @@ window.UNICAMPO_CONFIG = {
   sheetName: 'Biblioteca',
   usuarios: {
     'admin':     { pass: 'Unicampo2024!', nombre: 'Administrador' },
-    'nico':  { pass: 'nicoensayos.',    nombre: 'Técnico 1' },
-    'tato':  { pass: 'tatoensayos.',    nombre: 'Técnico 2' },
-    'alejandra': { pass: 'alensayos.', nombre: 'Consultor' },
+    'nico':  { pass: 'nicoensayos.',    nombre: 'Ing. Agr.(Msc.) Nicolas Cortazzo' },
+    'tato':  { pass: 'tatoensayos.',    nombre: 'Ing. Agr. Esteban Hoffman Berasain' },
+    'alejandra': { pass: 'alensayos.', nombre: 'Ing. Agr.(Msc.) Alejandra Vulliez' },
   }
 };
