@@ -3,8 +3,8 @@ window.UNICAMPO_CONFIG = {
   sheetName: 'Biblioteca',
   usuarios: {
     'admin':     { pass: 'Unicampo2024!', nombre: 'Administrador' },
-    'tecnico1':  { pass: 'Campo2024!',    nombre: 'Técnico 1' },
-    'tecnico2':  { pass: 'Campo2024!',    nombre: 'Técnico 2' },
-    'consultor': { pass: 'Consulta2024!', nombre: 'Consultor' },
+    'Nico':  { pass: 'nicoensayos.',    nombre: 'Técnico 1' },
+    'Tato':  { pass: 'tatoensayos.',    nombre: 'Técnico 2' },
+    'Alejandra': { pass: 'alensayos.', nombre: 'Consultor' },
   }
 };
