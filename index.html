@@ -47,6 +47,8 @@ body{font-family:'DM Sans',sans-serif;background:#f7f8f6;color:#1a1d18;min-heigh
 .hdr img{height:34px;width:auto;border-radius:5px}
 .hdrsep{width:1px;height:22px;background:rgba(255,255,255,.15)}
 .hdrtit{flex:1;color:rgba(255,255,255,.82);font-size:14px;font-weight:500}
+.avatar{width:32px;height:32px;border-radius:50%;border:2px solid rgba(255,255,255,.3);object-fit:cover;flex-shrink:0;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:white;overflow:hidden}
+.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 .upill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
   border-radius:20px;padding:4px 12px;color:rgba(255,255,255,.72);font-size:12px}
 .bsalir{background:none;border:1px solid rgba(255,255,255,.2);border-radius:var(--r);
@@ -222,6 +224,7 @@ mark{background:#fff9c4;color:#7c6500;border-radius:3px;padding:0 2px}
     <img src="logo-unicampo.png" alt="Unicampo" onerror="this.style.display='none'">
     <div class="hdrsep"></div>
     <div class="hdrtit">Biblioteca Técnica</div>
+    <div id="user-avatar" class="avatar"></div>
     <span class="upill" id="upill">—</span>
     <button class="bsalir" onclick="logout()">Salir</button>
   </header>
@@ -376,6 +379,14 @@ function login(){
   if(USUARIOS[u] && USUARIOS[u].pass === p){
     usr = {user:u, nombre:USUARIOS[u].nombre};
     document.getElementById('upill').textContent = USUARIOS[u].nombre;
+    const avatarEl = document.getElementById('user-avatar');
+    const foto = USUARIOS[u].foto || '';
+    if(foto) {
+      avatarEl.innerHTML = `<img src="${foto}" alt="${USUARIOS[u].nombre}" onerror="this.parentElement.innerHTML='${USUARIOS[u].nombre.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase()}'">`;
+    } else {
+      const iniciales = USUARIOS[u].nombre.split(' ').map(w=>w[0]).filter(Boolean).join('').substring(0,2).toUpperCase();
+      avatarEl.textContent = iniciales;
+    }
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app-screen').style.display = 'block';
     e.textContent = '';
