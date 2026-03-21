@@ -4,7 +4,7 @@ window.UNICAMPO_CONFIG = {
   usuarios: {
     'admin':     { pass: 'Unicampo2024!', nombre: 'Administrador', foto: '' },
     'nico':      { pass: 'nicoensayos.',  nombre: 'Ing. Agr.(Msc.) Nicolas Cortazzo', foto: 'https://URL-FOTO-NICO.jpg' },
-    'tato':      { pass: 'tatoensayos.',  nombre: 'Ing. Agr. Esteban Hoffman Berasain', foto: 'https://URL-FOTO-TATO.jpg' },
+    'tato':      { pass: 'tatoensayos.',  nombre: 'Ing. Agr. Esteban Hoffman Berasain', foto: 'https://drive.google.com/file/d/1ScLgILo4-W3vC4vp0PYKHDdEp-2mfwjU/view?usp=sharing' },
     'alejandra': { pass: 'alensayos.',    nombre: 'Ing. Agr.(Msc.) Alejandra Vulliez', foto: 'https://URL-FOTO-ALE.jpg' },
   }
 };
