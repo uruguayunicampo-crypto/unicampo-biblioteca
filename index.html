@@ -13,8 +13,6 @@ body{font-family:'DM Sans',sans-serif;background:#f7f8f6;color:#1a1d18;min-heigh
   --gris1:#f7f8f6;--gris2:#eef0ec;--gris3:#d4d8d0;--grist:#6b7466;
   --negro:#1a1d18;--r:10px;--rl:16px
 }
-
-/* LOGIN */
 #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;
   background:linear-gradient(160deg,#0f3d1f 0%,#0d2740 100%);padding:1.5rem}
 .lcard{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.13);
@@ -38,8 +36,6 @@ body{font-family:'DM Sans',sans-serif;background:#f7f8f6;color:#1a1d18;min-heigh
 .btn-ing:hover{background:#22a049}
 .lerr{color:#ff7070;font-size:12px;text-align:center;margin-top:.7rem;min-height:18px}
 .lhint{color:rgba(255,255,255,.15);font-size:11px;text-align:center;margin-top:1.8rem;line-height:1.6}
-
-/* APP */
 #app-screen{display:none}
 .hdr{background:linear-gradient(135deg,#0f3d1f,#0d2740);padding:0 1.2rem;
   display:flex;align-items:center;gap:.8rem;height:56px;
@@ -55,17 +51,12 @@ body{font-family:'DM Sans',sans-serif;background:#f7f8f6;color:#1a1d18;min-heigh
   color:rgba(255,255,255,.5);font-family:'DM Sans',sans-serif;font-size:11px;
   padding:5px 12px;cursor:pointer;transition:all .2s}
 .bsalir:hover{background:rgba(255,255,255,.1);color:white}
-
 .content{max-width:1100px;margin:0 auto;padding:1.2rem}
-
-/* Stats */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:1.1rem}
 .stat{background:white;border:1px solid var(--gris3);border-radius:var(--r);
   padding:11px 13px;text-align:center}
 .stn{font-size:22px;font-weight:600;color:var(--verde);line-height:1}
 .stl{font-size:10px;color:var(--grist);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
-
-/* Search */
 .sbox{background:white;border:1px solid var(--gris3);border-radius:var(--rl);
   padding:1.1rem;margin-bottom:.9rem;box-shadow:0 2px 10px rgba(0,0,0,.06)}
 .stop{display:flex;gap:8px;margin-bottom:9px}
@@ -91,13 +82,9 @@ body{font-family:'DM Sans',sans-serif;background:#f7f8f6;color:#1a1d18;min-heigh
 .filters select{padding:6px 10px;border:1px solid var(--gris3);border-radius:var(--r);
   font-family:'DM Sans',sans-serif;font-size:12px;color:var(--grist);
   background:var(--gris1);cursor:pointer;outline:none}
-
-/* Banner */
 .banner{background:#fff8e1;border:1px solid #ffe082;border-radius:var(--r);
   padding:10px 14px;font-size:12px;color:#6d4c00;margin-bottom:.9rem;line-height:1.5}
 .banner.oculto{display:none}
-
-/* Results bar */
 .rbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}
 .rinfo{font-size:12px;color:var(--grist)}
 .rinfo strong{color:var(--negro)}
@@ -105,12 +92,8 @@ body{font-family:'DM Sans',sans-serif;background:#f7f8f6;color:#1a1d18;min-heigh
 .vb{background:white;border:1px solid var(--gris3);border-radius:var(--r);
   color:var(--grist);font-size:12px;padding:5px 11px;cursor:pointer;transition:all .15s}
 .vb.on{background:var(--verde);border-color:var(--verde);color:white}
-
-/* Grid/Lista */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:9px}
 .lista{display:flex;flex-direction:column;gap:7px}
-
-/* Card */
 .card{background:white;border:1px solid var(--gris3);border-radius:var(--rl);
   padding:.9rem 1rem;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .1s;
   position:relative;overflow:hidden}
@@ -137,13 +120,9 @@ mark{background:#fff9c4;color:#7c6500;border-radius:3px;padding:0 2px}
   color:var(--verde);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;
   padding:5px 11px;cursor:pointer;text-decoration:none;transition:background .15s}
 .bver:hover{background:#c8e6c9}
-
-/* Card lista */
 .clista{display:flex;align-items:center;gap:11px}
 .clista .cinfo{flex:1;min-width:0}
 .clista .caction{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px}
-
-/* Empty/Loading */
 .empty,.loading{text-align:center;padding:3.5rem 1rem;color:var(--grist);grid-column:1/-1}
 .empty-i{font-size:38px;margin-bottom:10px}
 .empty h3{font-size:15px;color:var(--negro);margin-bottom:5px}
@@ -151,8 +130,6 @@ mark{background:#fff9c4;color:#7c6500;border-radius:3px;padding:0 2px}
 .spinner{width:30px;height:30px;border:3px solid var(--gris2);border-top-color:var(--verde-vivo);
   border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 10px}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* Modal */
 .mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.52);
   z-index:200;align-items:center;justify-content:center;padding:1rem}
 .mbg.open{display:flex}
@@ -184,7 +161,6 @@ mark{background:#fff9c4;color:#7c6500;border-radius:3px;padding:0 2px}
   color:white;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
   padding:8px 20px;cursor:pointer;transition:background .2s}
 .bguardar:hover{background:var(--verde-vivo)}
-
 @media(max-width:600px){
   .stats{grid-template-columns:repeat(2,1fr)}
   .frow{grid-template-columns:1fr}
@@ -193,8 +169,6 @@ mark{background:#fff9c4;color:#7c6500;border-radius:3px;padding:0 2px}
 </style>
 </head>
 <body>
-
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="lcard">
     <div class="llogo">
@@ -217,8 +191,6 @@ mark{background:#fff9c4;color:#7c6500;border-radius:3px;padding:0 2px}
     <p class="lhint">Unicampo Uruguay S.R.L.<br>Sistema de gestión documental técnica</p>
   </div>
 </div>
-
-<!-- APP -->
 <div id="app-screen">
   <header class="hdr">
     <img src="logo-unicampo.png" alt="Unicampo" onerror="this.style.display='none'">
@@ -228,19 +200,16 @@ mark{background:#fff9c4;color:#7c6500;border-radius:3px;padding:0 2px}
     <span class="upill" id="upill">—</span>
     <button class="bsalir" onclick="logout()">Salir</button>
   </header>
-
   <div class="content">
     <div class="banner oculto" id="banner">
       ⚠️ No conectado a Google Sheets. Mostrando datos de ejemplo. Configurá el SHEET_ID en config.js
     </div>
-
     <div class="stats">
       <div class="stat"><div class="stn" id="st">—</div><div class="stl">Trabajos</div></div>
       <div class="stat"><div class="stn" id="ste">—</div><div class="stl">Temas</div></div>
       <div class="stat"><div class="stn" id="sc">—</div><div class="stl">Cultivos</div></div>
       <div class="stat"><div class="stn" id="sz">—</div><div class="stl">Zafras</div></div>
     </div>
-
     <div class="sbox">
       <div class="stop">
         <div class="swrap">
@@ -265,6 +234,7 @@ mark{background:#fff9c4;color:#7c6500;border-radius:3px;padding:0 2px}
         <select id="ft" onchange="buscar()"><option value="">Todos los temas</option></select>
         <select id="fc" onchange="buscar()"><option value="">Todos los cultivos</option></select>
         <select id="fz" onchange="buscar()"><option value="">Todas las zafras</option></select>
+        <select id="fe" onchange="buscar()"><option value="">Todas las empresas</option></select>
         <select id="ftp" onchange="buscar()">
           <option value="">Todos los tipos</option>
           <option value="pptx">PowerPoint</option>
@@ -273,7 +243,6 @@ mark{background:#fff9c4;color:#7c6500;border-radius:3px;padding:0 2px}
         </select>
       </div>
     </div>
-
     <div class="rbar">
       <p class="rinfo" id="rinfo"></p>
       <div class="vbtns">
@@ -281,12 +250,9 @@ mark{background:#fff9c4;color:#7c6500;border-radius:3px;padding:0 2px}
         <button class="vb" id="vl" onclick="setVista('lista')">☰ Lista</button>
       </div>
     </div>
-
     <div id="res" class="grid"></div>
   </div>
 </div>
-
-<!-- MODAL -->
 <div class="mbg" id="modal">
   <div class="modal">
     <div class="mhdr">
@@ -342,10 +308,8 @@ mark{background:#fff9c4;color:#7c6500;border-radius:3px;padding:0 2px}
     </div>
   </div>
 </div>
-
 <script src="config.js"></script>
 <script>
-// ---- CONFIG ----
 const USUARIOS = window.UNICAMPO_CONFIG?.usuarios || {
   'admin':    {pass:'Unicampo2024!', nombre:'Administrador'},
   'tecnico1': {pass:'Campo2024!',    nombre:'Técnico 1'},
@@ -353,25 +317,14 @@ const USUARIOS = window.UNICAMPO_CONFIG?.usuarios || {
 };
 const SHEET_ID   = window.UNICAMPO_CONFIG?.sheetId   || '';
 const SHEET_NAME = window.UNICAMPO_CONFIG?.sheetName || 'Biblioteca';
-
-// ---- DEMO DATA ----
 const DEMO = [
-  {titulo:'Fitotoxicidad de herbicidas postemergentes en trigo — evaluación de síntomas y recuperación',tema:'Fitotoxicidad',cultivo:'Trigo',zafra:'2023/24',tipo:'pptx',keywords:'herbicida, toxicidad, hoja bandera, daño foliar, 2,4-D, MCPA, recuperación',resumen:'Evaluación de daños por herbicidas en distintos estadios del trigo. Síntomas y recuperación.',autor:'Ing. Rodríguez',archivo:'fitotox_trigo_2023.pptx',link:''},
-  {titulo:'Nitrógeno en suelo — curvas de dilución y eficiencia de fertilización en invierno',tema:'Fertilidad de suelos',cultivo:'Trigo',zafra:'2022/23',tipo:'pptx',keywords:'nitrógeno, nitrato, curva de dilución, NUE, fraccionamiento',resumen:'Curvas de dilución de N en trigo y cebada. Comparación de estrategias de fraccionamiento.',autor:'Ing. García',archivo:'N_dilucion_2022.pptx',link:''},
-  {titulo:'Cultivos de servicio como supresores de malezas — resultados zafra 2023',tema:'Cultivos de servicio',cultivo:'Soja',zafra:'2023/24',tipo:'pptx',keywords:'cover crops, supresión, malezas, ryegrass, avena, biomasa, alelopatía',resumen:'Ensayo comparativo de cultivos de servicio y efecto supresor sobre malezas estivales.',autor:'Ing. Martínez',archivo:'cultivos_servicio_2023.pptx',link:''},
-  {titulo:'Manejo de nitrógeno en maíz — dosis y momento de aplicación',tema:'Fertilidad de suelos',cultivo:'Maíz',zafra:'2022/23',tipo:'pptx',keywords:'nitrógeno, urea, maíz, V6, fraccionamiento, rendimiento',resumen:'6 dosis de N en maíz de primera. Momento de aplicación y respuesta productiva.',autor:'Ing. García',archivo:'N_maiz_2022.pptx',link:''},
-  {titulo:'Fungicidas en trigo — timing de aplicación y control de mancha amarilla',tema:'Fitopatología',cultivo:'Trigo',zafra:'2023/24',tipo:'pptx',keywords:'fungicida, mancha amarilla, Drechslera, trigo, estrobilurina, triazol',resumen:'Timing de fungicidas en trigo para control de mancha amarilla. ABCPE y rendimiento.',autor:'Ing. Rodríguez',archivo:'fungic_trigo_2023.pptx',link:''},
-  {titulo:'Ganadería sobre campo natural — carga animal y performance en recría',tema:'Ganadería',cultivo:'Campo natural',zafra:'2022/23',tipo:'pptx',keywords:'campo natural, carga animal, recría, novillos, GDP, condición corporal',resumen:'Recría vacuna en campo natural basáltico con distintas cargas. GDP y eficiencia.',autor:'Ing. Techeira',archivo:'recria_CN_2022.pptx',link:''},
-  {titulo:'Soja de segunda — densidad de siembra y arreglo espacial',tema:'Manejo de cultivos',cultivo:'Soja',zafra:'2022/23',tipo:'pptx',keywords:'soja, densidad, segunda fecha, ambientes, rendimiento',resumen:'Densidades 15–40 pl/m2 en soja de segunda en distintos suelos del litoral.',autor:'Ing. Pérez',archivo:'soja2_densidad_2022.pptx',link:''},
-  {titulo:'Eficiencia de insecticidas foliares en soja — control de chinche y trips',tema:'Entomología',cultivo:'Soja',zafra:'2023/24',tipo:'pptx',keywords:'insecticida, chinche, Nezara, trips, soja, piretroide',resumen:'Moléculas insecticidas para control de plagas en soja R3-R5.',autor:'Ing. López',archivo:'insect_soja_2023.pptx',link:''},
+  {titulo:'Fitotoxicidad de herbicidas postemergentes en trigo',tema:'Fitotoxicidad',cultivo:'Trigo',zafra:'2023/24',tipo:'pptx',keywords:'herbicida, toxicidad, hoja bandera',resumen:'Evaluación de daños por herbicidas en trigo.',autor:'Ing. Rodríguez',empresa:'',archivo:'fitotox_trigo_2023.pptx',link:''},
+  {titulo:'Nitrógeno en suelo — curvas de dilución en invierno',tema:'Fertilidad de suelos',cultivo:'Trigo',zafra:'2022/23',tipo:'pptx',keywords:'nitrógeno, nitrato, curva de dilución',resumen:'Curvas de dilución de N en trigo y cebada.',autor:'Ing. García',empresa:'',archivo:'N_dilucion_2022.pptx',link:''},
 ];
-
-// ---- STATE ----
 let bib = [];
 let vista = 'grid';
 let usr = null;
 
-// ---- AUTH ----
 function login(){
   const u = document.getElementById('lu').value.trim();
   const p = document.getElementById('lp').value;
@@ -381,11 +334,10 @@ function login(){
     document.getElementById('upill').textContent = USUARIOS[u].nombre;
     const avatarEl = document.getElementById('user-avatar');
     const foto = USUARIOS[u].foto || '';
-    if(foto) {
+    if(foto){
       avatarEl.innerHTML = `<img src="${foto}" alt="${USUARIOS[u].nombre}" onerror="this.parentElement.innerHTML='${USUARIOS[u].nombre.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase()}'">`;
     } else {
-      const iniciales = USUARIOS[u].nombre.split(' ').map(w=>w[0]).filter(Boolean).join('').substring(0,2).toUpperCase();
-      avatarEl.textContent = iniciales;
+      avatarEl.textContent = USUARIOS[u].nombre.split(' ').map(w=>w[0]).filter(Boolean).join('').substring(0,2).toUpperCase();
     }
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('app-screen').style.display = 'block';
@@ -396,7 +348,6 @@ function login(){
     document.getElementById('lp').value = '';
   }
 }
-
 function logout(){
   usr = null;
   document.getElementById('login-screen').style.display = 'flex';
@@ -405,11 +356,9 @@ function logout(){
   document.getElementById('lp').value = '';
   document.getElementById('si').value = '';
 }
-
 document.getElementById('lp').addEventListener('keydown', e => { if(e.key==='Enter') login(); });
 document.getElementById('lu').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('lp').focus(); });
 
-// ---- CARGAR DATOS ----
 async function cargar(){
   if(!SHEET_ID){
     document.getElementById('banner').classList.remove('oculto');
@@ -425,10 +374,8 @@ async function cargar(){
     const json = JSON.parse(txt.substring(47).slice(0,-2));
     let cols = json.table.cols.map(c => c.label.toLowerCase().trim());
     let rows = json.table.rows;
-    // Si los labels están vacíos, usar la primera fila como encabezados
-    if(cols.every(c => c === '')) {
-      const firstRow = rows[0].c.map(cell => String(cell?.v ?? '').toLowerCase().trim());
-      cols = firstRow;
+    if(cols.every(c => c === '')){
+      cols = rows[0].c.map(cell => String(cell?.v ?? '').toLowerCase().trim());
       rows = rows.slice(1);
     }
     bib = rows.map(row => {
@@ -477,26 +424,25 @@ function filtros(){
   fill('ft', bib.map(w=>w.tema),    'Todos los temas');
   fill('fc', bib.map(w=>w.cultivo), 'Todos los cultivos');
   fill('fz', bib.map(w=>w.zafra),   'Todas las zafras');
+  fill('fe', bib.map(w=>w.empresa), 'Todas las empresas');
 }
 
-// ---- BÚSQUEDA ----
 function buscar(){
   const q   = document.getElementById('si').value.toLowerCase().trim();
   const fT  = document.getElementById('ft').value;
   const fC  = document.getElementById('fc').value;
   const fZ  = document.getElementById('fz').value;
+  const fE  = document.getElementById('fe').value;
   const fTp = document.getElementById('ftp').value;
   const pal = q.split(/\s+/).filter(Boolean);
-
   const res = bib.filter(w => {
-    const txt = [w.titulo,w.tema,w.cultivo,w.keywords,w.resumen,w.autor,w.zafra,w.archivo].join(' ').toLowerCase();
+    const txt = [w.titulo,w.tema,w.cultivo,w.keywords,w.resumen,w.autor,w.zafra,w.empresa,w.archivo].join(' ').toLowerCase();
     const mq = pal.length===0 || pal.every(p => txt.includes(p));
-    return mq && (!fT||w.tema===fT) && (!fC||w.cultivo===fC) && (!fZ||w.zafra===fZ) && (!fTp||w.tipo===fTp);
+    return mq && (!fT||w.tema===fT) && (!fC||w.cultivo===fC) && (!fZ||w.zafra===fZ) && (!fE||w.empresa===fE) && (!fTp||w.tipo===fTp);
   });
-
   const n = res.length;
   const info = document.getElementById('rinfo');
-  if(q||fT||fC||fZ||fTp){
+  if(q||fT||fC||fZ||fE||fTp){
     info.innerHTML = `<strong>${n}</strong> resultado${n!==1?'s':''} encontrado${n!==1?'s':''}${q?` para "<strong>${q}</strong>"`:''}`;
   } else {
     info.innerHTML = `<strong>${n}</strong> trabajo${n!==1?'s':''} en la biblioteca`;
@@ -504,7 +450,6 @@ function buscar(){
   render(res, q);
 }
 
-// ---- RENDER ----
 function hl(txt, q){
   if(!q||!txt) return txt||'';
   const pal = q.trim().split(/\s+/).filter(Boolean);
@@ -515,7 +460,6 @@ function hl(txt, q){
   });
   return r;
 }
-
 const ico = t => ({pptx:'📊',pdf:'📄',docx:'📝'})[t]||'📁';
 
 function render(lista, q){
@@ -575,12 +519,9 @@ function setVista(v){
   document.getElementById('vl').classList.toggle('on', v==='lista');
   buscar();
 }
-
 function detalle(w){
-  alert(`📋 ${w.titulo}\n\nTema: ${w.tema}\nCultivo: ${w.cultivo}\nZafra: ${w.zafra}\nAutor: ${w.autor}\nArchivo: ${w.archivo}\n\nResumen:\n${w.resumen}\n\nPalabras clave:\n${w.keywords}`);
+  alert(`📋 ${w.titulo}\n\nTema: ${w.tema}\nCultivo: ${w.cultivo}\nZafra: ${w.zafra}\nAutor: ${w.autor}\nEmpresa: ${w.empresa}\nArchivo: ${w.archivo}\n\nResumen:\n${w.resumen}\n\nPalabras clave:\n${w.keywords}`);
 }
-
-// ---- MODAL ----
 function abrirModal(){ document.getElementById('modal').classList.add('open'); }
 function cerrar(){
   document.getElementById('modal').classList.remove('open');
@@ -589,7 +530,6 @@ function cerrar(){
     if(el.tagName==='SELECT') el.selectedIndex=0; else el.value='';
   });
 }
-
 function guardar(){
   const titulo = document.getElementById('mt').value.trim();
   if(!titulo){ alert('El título es obligatorio'); return; }
@@ -603,6 +543,7 @@ function guardar(){
     keywords: document.getElementById('mk').value.trim(),
     resumen:  document.getElementById('mr').value.trim(),
     autor:    document.getElementById('mau').value.trim()||usr?.nombre||'',
+    empresa:  '',
     archivo:  document.getElementById('mar').value.trim()||titulo.toLowerCase().replace(/\s+/g,'_')+'.pptx',
   };
   bib.unshift(w);
