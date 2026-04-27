@@ -106,6 +106,9 @@ body{font-family:'DM Sans',sans-serif;background:#f7f8f6;color:#1a1d18;min-heigh
   justify-content:center;font-size:15px;flex-shrink:0}
 .ti-pptx{background:#fff3e0}.ti-pdf{background:#fce4ec}.ti-docx{background:#e3f2fd}.ti-otro{background:#f3e5f5}
 .ctit{font-size:13px;font-weight:600;color:var(--negro);line-height:1.35;flex:1}
+.cid{display:inline-block;font-size:10px;font-weight:600;color:var(--grist);
+  background:var(--gris2);border:1px solid var(--gris3);border-radius:4px;
+  padding:1px 6px;letter-spacing:.04em;margin-bottom:6px}
 .tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
 .tag{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500}
 .tt{background:#e8f5e9;color:#2e7d32}
@@ -318,8 +321,8 @@ const USUARIOS = window.UNICAMPO_CONFIG?.usuarios || {
 const SHEET_ID   = window.UNICAMPO_CONFIG?.sheetId   || '';
 const SHEET_NAME = window.UNICAMPO_CONFIG?.sheetName || 'Biblioteca';
 const DEMO = [
-  {titulo:'Fitotoxicidad de herbicidas postemergentes en trigo',tema:'Fitotoxicidad',cultivo:'Trigo',zafra:'2023/24',tipo:'pptx',keywords:'herbicida, toxicidad, hoja bandera',resumen:'Evaluación de daños por herbicidas en trigo.',autor:'Ing. Rodríguez',empresa:'',archivo:'fitotox_trigo_2023.pptx',link:''},
-  {titulo:'Nitrógeno en suelo — curvas de dilución en invierno',tema:'Fertilidad de suelos',cultivo:'Trigo',zafra:'2022/23',tipo:'pptx',keywords:'nitrógeno, nitrato, curva de dilución',resumen:'Curvas de dilución de N en trigo y cebada.',autor:'Ing. García',empresa:'',archivo:'N_dilucion_2022.pptx',link:''},
+  {titulo:'Fitotoxicidad de herbicidas postemergentes en trigo',tema:'Fitotoxicidad',cultivo:'Trigo',zafra:'2023/24',tipo:'pptx',keywords:'herbicida, toxicidad, hoja bandera',resumen:'Evaluación de daños por herbicidas en trigo.',autor:'Ing. Rodríguez',empresa:'',archivo:'fitotox_trigo_2023.pptx',link:'',id:''},
+  {titulo:'Nitrógeno en suelo — curvas de dilución en invierno',tema:'Fertilidad de suelos',cultivo:'Trigo',zafra:'2022/23',tipo:'pptx',keywords:'nitrógeno, nitrato, curva de dilución',resumen:'Curvas de dilución de N en trigo y cebada.',autor:'Ing. García',empresa:'',archivo:'N_dilucion_2022.pptx',link:'',id:''},
 ];
 let bib = [];
 let vista = 'grid';
@@ -393,6 +396,7 @@ async function cargar(){
         empresa:  String(o['empresa']||''),
         archivo:  String(o['archivo']||o['titulo']||''),
         link:     String(o['link']||o['url']||''),
+        id:       String(o['id']||o['n°']||''),
       };
     }).filter(w => w.titulo);
   } catch(err){
@@ -476,6 +480,7 @@ function render(lista, q){
           <div class="tipo-icon ti-${w.tipo}">${ico(w.tipo)}</div>
           <div class="ctit">${hl(w.titulo,q)}</div>
         </div>
+        ${w.id?`<span class="cid">${w.id}</span>`:''}
         <div class="tags">
           <span class="tag tt">${w.tema}</span>
           <span class="tag tc">${w.cultivo}</span>
@@ -496,6 +501,7 @@ function render(lista, q){
           <div class="tipo-icon ti-${w.tipo}">${ico(w.tipo)}</div>
           <div class="cinfo">
             <div class="ctit">${hl(w.titulo,q)}</div>
+            ${w.id?`<span class="cid">${w.id}</span>`:''}
             <div class="tags" style="margin-top:4px">
               <span class="tag tt">${w.tema}</span>
               <span class="tag tc">${w.cultivo}</span>
@@ -545,6 +551,7 @@ function guardar(){
     autor:    document.getElementById('mau').value.trim()||usr?.nombre||'',
     empresa:  '',
     archivo:  document.getElementById('mar').value.trim()||titulo.toLowerCase().replace(/\s+/g,'_')+'.pptx',
+    id:       '',
   };
   bib.unshift(w);
   cerrar(); stats(); filtros(); buscar();
